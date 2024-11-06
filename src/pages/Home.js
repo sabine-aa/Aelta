@@ -4,8 +4,38 @@ import Footer from "../components/Footer";
 import ImageSlider from "../components/ImageSlider";
 import SponsorSlider from "../components/SponsorSlider";
 import teacher from "../assets/teacher.png";
+import image1 from "../assets/image1.jpg";
+import image2 from "../assets/image2.jpg";
+import image3 from "../assets/image3.jpg";
+import BlogCard from "../components/BlogsCard";
 
 const Home = () => {
+  const blogs = [
+    {
+      id: 1,
+      title: "Robotics",
+      description: "A deep dive into React's component lifecycle.",
+      image: image1,
+      slug: "robotics",
+      date: "October 20, 2024",
+    },
+    {
+      id: 2,
+      title: "Programming",
+      description: "How Tailwind can streamline your styling process.",
+      image: image2,
+      slug: "programming",
+      date: "October 15, 2024",
+    },
+    {
+      id: 3,
+      title: "Art Program",
+      description: "Introduction to DevOps and best practices.",
+      image: image3,
+      slug: "art-program",
+      date: "October 10, 2024",
+    },
+  ];
   return (
     <div>
       <Navbar />
@@ -29,7 +59,7 @@ const Home = () => {
                 <p className="text-sm text-gray-700 mb-4">
                   We provide innovative solutions to help you achieve your
                   goals. Our team is dedicated to delivering quality services
-                  that meet your needs and exceed your expectations. 
+                  that meet your needs and exceed your expectations.
                 </p>
               </div>
               <a
@@ -42,11 +72,24 @@ const Home = () => {
 
             <div className="flex-1 p-4 lg:p-10">
               <img
-                src={teacher} // Use your actual image source
+                src={teacher}
                 alt="A descriptive alt text"
                 className="w-full h-auto rounded-lg object-cover"
               />
             </div>
+          </div>
+          <h1 className="text-3xl text-center font-bold my-10">Our Latest Blogs</h1>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {blogs.map((blog) => (
+              <BlogCard
+                key={blog.id}
+                title={blog.title}
+                description={blog.description}
+                image={blog.image}
+                slug={blog.slug}
+                date={blog.date}
+              />
+            ))}
           </div>
         </div>
       </div>

@@ -1,30 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logoAelta.png";
 import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [color, setColor] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <nav style={{ backgroundColor: "#360182" }}>
+    <nav
+      className={`sticky top-0 z-50 transition-all ${
+        scrolled
+          ? "bg-[#360182] h-20 text-[#360182]"
+          : "bg-[#360182] text-white shadow-md"
+      }`}
+    >
       <div className="px-4">
         <div className="flex justify-between md:justify-around items-center h-25">
-          <div className="flex items-center ">
-            <img src={logo} alt="logo" className="mx-2 md:mx-2 my-2 w-20" />
-            <div className="text-white font-bold text-3xl">AELTA</div>
+          <div className="flex items-center">
+            <img
+              src={logo}
+              alt="logo"
+              className={`mx-2 md:mx-2 my-2 w-20 transition-all ${
+                scrolled ? "w-16" : "w-20"
+              }`}
+            />
+            <div
+              className={`text-white font-bold text-3xl transition-all ${
+                scrolled ? "text-2xl" : "text-3xl"
+              }`}
+            >
+              AELTA
+            </div>
           </div>
           <div className="hidden md:flex space-x-4">
             <NavLink
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#b3902f]  px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300  hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
               }
             >
               Home
@@ -33,8 +61,8 @@ const Navbar = () => {
               to="/about"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#b3902f]  px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300  hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
               }
             >
               About Us
@@ -43,8 +71,8 @@ const Navbar = () => {
               to="/courses"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#b3902f]  px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300  hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
               }
             >
               Courses
@@ -53,8 +81,8 @@ const Navbar = () => {
               to="/blogs"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#b3902f]  px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300  hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
               }
             >
               Blogs
@@ -63,8 +91,8 @@ const Navbar = () => {
               to="/contact"
               className={({ isActive }) =>
                 isActive
-                  ? "text-[#b3902f]  px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300  hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
+                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
               }
             >
               Contact Us
@@ -124,4 +152,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
 export default Navbar;
