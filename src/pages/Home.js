@@ -47,7 +47,7 @@ const Home = () => {
             <div className="flex-1 flex flex-col justify-between p-4 lg:p-10 xl:p-20">
               {" "}
               <div>
-                <h2 className="text-2xl font-bold mb-4">
+                <h2 className="text-2xl text-[#5a38a7] font-bold mb-4">
                   Welcome to Our Website!
                 </h2>
                 <p className="text-sm text-gray-700 mb-4">
@@ -78,7 +78,9 @@ const Home = () => {
               />
             </div>
           </div>
-          <h1 className="text-3xl text-center font-bold my-10">Our Latest Blogs</h1>
+          <h1 className="text-3xl text-[#5a38a7] text-center font-bold my-10">
+            Our Latest Blogs
+          </h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {blogs.map((blog) => (
               <BlogCard

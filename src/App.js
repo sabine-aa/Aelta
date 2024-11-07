@@ -1,17 +1,16 @@
-
-import './App.css';
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import AboutUs  from './pages/AboutUs';
-import Courses from './pages/Courses';
-import Blogs from './pages/Blogs';
-import BlogsDetails from './components/BlogsDetails';
-import ContactUs from './pages/ContactUs';
-import TeamDetail from './components/TeamDetail';
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import AboutUs from "./pages/AboutUs";
+import Courses from "./pages/Courses";
+import Blogs from "./pages/Blogs";
+import BlogsDetails from "./components/BlogsDetails";
+import ContactUs from "./pages/ContactUs";
+import TeamDetail from "./components/TeamDetail";
+import CourseDetail from "./components/CourseDetail";
 
 function App() {
-  
   return (
     <Router>
       <div>
@@ -24,6 +23,8 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/" element={<AboutUs />} />
           <Route path="/team/:slug" element={<TeamDetail />} />
+          <Route path="/courses" element={<Courses />} />
+          <Route path="/courses/:slug" element={<CourseDetail />} />
         </Routes>
       </div>
     </Router>

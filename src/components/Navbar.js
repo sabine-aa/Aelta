@@ -24,7 +24,7 @@ const Navbar = () => {
     <nav
       className={`sticky top-0 z-50 transition-all ${
         scrolled
-          ? "bg-[#360182] h-20 text-[#360182]"
+          ? "bg-[#360182] h-18 text-[#360182]"
           : "bg-[#360182] text-white shadow-md"
       }`}
     >
@@ -34,69 +34,40 @@ const Navbar = () => {
             <img
               src={logo}
               alt="logo"
-              className={`mx-2 md:mx-2 my-2 w-20 transition-all ${
-                scrolled ? "w-16" : "w-20"
+              className={`mx-2 md:mx-2 my-2 transition-all ${
+                scrolled ? "w-14" : "w-20"
               }`}
             />
             <div
-              className={`text-white font-bold text-3xl transition-all ${
-                scrolled ? "text-2xl" : "text-3xl"
+              className={`text-white font-bold transition-all ${
+                scrolled ? "text-xl" : "text-3xl"
               }`}
             >
               AELTA
             </div>
           </div>
           <div className="hidden md:flex space-x-4">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-              }
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/about"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-              }
-            >
-              About Us
-            </NavLink>
-            <NavLink
-              to="/courses"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-              }
-            >
-              Courses
-            </NavLink>
-            <NavLink
-              to="/blogs"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-              }
-            >
-              Blogs
-            </NavLink>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive
-                  ? "text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-                  : "text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md text-lg font-small"
-              }
-            >
-              Contact Us
-            </NavLink>
+            {["/", "/about", "/courses", "/blogs", "/contact"].map(
+              (path, index) => (
+                <NavLink
+                  key={index}
+                  to={path}
+                  className={({ isActive }) =>
+                    isActive
+                      ? `text-[#b3902f] px-3 py-2 rounded-md ${
+                          scrolled ? "text-base" : "text-lg"
+                        } font-small`
+                      : `text-gray-300 hover:text-[#b3902f] px-3 py-2 rounded-md ${
+                          scrolled ? "text-base" : "text-lg"
+                        } font-small`
+                  }
+                >
+                  {path === "/"
+                    ? "Home"
+                    : path.slice(1).replace(/^\w/, (c) => c.toUpperCase())}
+                </NavLink>
+              )
+            )}
           </div>
           <div className="md:hidden">
             <button
@@ -117,36 +88,21 @@ const Navbar = () => {
           className="flex flex-col md:hidden ml-8"
           style={{ backgroundColor: "#360182" }}
         >
-          <a
-            href="/"
-            className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 rounded-md text-base font-medium"
-          >
-            Home
-          </a>
-          <a
-            href="/about"
-            className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 rounded-md text-base font-medium"
-          >
-            About Us
-          </a>
-          <a
-            href="/courses"
-            className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 rounded-md text-base font-medium"
-          >
-            Courses
-          </a>
-          <a
-            href="/blogs"
-            className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 rounded-md text-base font-medium"
-          >
-            Blogs
-          </a>
-          <a
-            href="/contact"
-            className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 mb-2 rounded-md text-base font-medium"
-          >
-            Contact Us
-          </a>
+          {["Home", "About Us", "Courses", "Blogs", "Contact Us"].map(
+            (name, index) => (
+              <NavLink
+                key={index}
+                to={
+                  name === "Home"
+                    ? "/"
+                    : `/${name.toLowerCase().replace(/\s/g, "")}`
+                }
+                className="text-gray-300 hover:bg-gray-500 hover:text-[#b3902f] px-3 py-2 rounded-md text-base font-medium"
+              >
+                {name}
+              </NavLink>
+            )
+          )}
         </div>
       )}
     </nav>
