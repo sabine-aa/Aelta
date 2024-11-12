@@ -5,26 +5,36 @@ import Footer from "../components/Footer";
 import SAT from "../assets/sat.png";
 import TOEFL from "../assets/toefl.png";
 import IELTS from "../assets/ielts.png";
+import GRE from "../assets/gre.png";
 
 const courses = [
-
   {
     name: "SAT ",
-    description: "Comprehensive SAT preparation to enhance your skills in math, reading, and writing.",
-    image: SAT, 
+    description:
+      "Comprehensive SAT preparation to enhance your skills in math, reading, and writing.",
+    image: SAT,
     slug: "sat",
   },
   {
     name: "TOEFL ",
-    description: "Prepare for the TOEFL exam with in-depth language practice and strategies for each section.",
-    image: TOEFL, 
+    description:
+      "Prepare for the TOEFL exam with in-depth language practice and strategies for each section.",
+    image: TOEFL,
     slug: "toefl",
   },
   {
     name: "IELTS",
-    description: "Get ready for the IELTS with expert tips and exercises for reading, writing, listening, and speaking.",
-    image: IELTS, 
+    description:
+      "Get ready for the IELTS with expert tips and exercises for reading, writing, listening, and speaking.",
+    image: IELTS,
     slug: "ielts",
+  },
+  {
+    name: "GRE",
+    description:
+      "Get ready for the IELTS with expert tips and exercises for reading, writing, listening, and speaking.",
+    image: GRE,
+    slug: "gre",
   },
 ];
 

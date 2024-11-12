@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 import SAT from "../assets/sat.png";
 import TOEFL from "../assets/toefl.png";
 import IELTS from "../assets/ielts.png";
+import GRE from "../assets/gre.png";
 
 const courseData = {
   sat: {
@@ -66,6 +67,26 @@ const courseData = {
       </div>
     `,
     image: IELTS,
+  },
+  gre: {
+    name: "GRE Preparation",
+    description:
+      "The GRE (Graduate Record Examination) is a globally recognized test for admission to graduate and business schools. Our GRE preparation course thoroughly covers the quantitative, verbal, and analytical writing sections, equipping students with the strategies needed to excel and achieve their target scores.",
+    details:
+      "Our GRE program offers a structured approach to mastering test content, including problem-solving techniques for quantitative questions, strategies for critical reasoning in the verbal section, and practice for analytical writing. Our expert instructors provide personalized feedback and targeted practice exercises to help students build confidence and proficiency for each part of the GRE.",
+    preparationSection: `
+      <div class="preparation">
+        <h2 class="text-2xl font-bold text-[#360182] mb-4">Our Approach to GRE Preparation</h2>
+        <p class="text-lg text-gray-700 mb-6">
+          Our GRE course emphasizes strategic approaches to each test section, with an in-depth focus on time management, logical reasoning, and quantitative skills. We prepare students to tackle challenging problems and approach the GRE with confidence.
+        </p>
+        <h3 class="text-xl font-semibold text-[#360182] mb-3">Building Foundations for Academic and Career Success</h3>
+        <p class="text-lg text-gray-700 mb-6">
+          Beyond test scores, our GRE preparation program helps students build analytical and communication skills essential for graduate studies and professional growth. We aim to empower students with the competencies needed to excel in their academic pursuits and beyond.
+        </p>
+      </div>
+    `,
+    image: GRE,
   },
 };
 
