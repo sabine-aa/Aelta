@@ -71,10 +71,11 @@ const AboutUs = () => {
             Our Mission
           </h2>
           <p className="text-gray-700 text-lg mb-4">
-            Our mission is to inspire positive change through innovative
-            solutions, striving to create a sustainable impact in our
-            communities and industries. Every day, we work towards advancing
-            technology with a purpose-driven approach.
+            AELTA is committed to providing personalized tutorials and
+            professional development services that enhance academic skills. We
+            strive to bridge educational opportunities and ensure access to
+            diverse resources, enabling students to succeed in their academic
+            pursuits.
           </p>
           <img
             src={missionImage}
@@ -89,10 +90,9 @@ const AboutUs = () => {
             Our Vision
           </h2>
           <p className="text-gray-700 text-lg mb-4">
-            To be leaders in the tech world who not only innovate but also
-            uplift. We envision a future where technology empowers every
-            individual to reach their potential, creating a more inclusive,
-            sustainable world.creating a more inclusive, sustainable world.
+            AELTA envisions a dynamic educational landscape where every learner
+            is empowered to achieve academic excellence and proficiency,
+            fostering a culture of collaboration and lifelong learning.
           </p>
           <img
             src={visionImage}
