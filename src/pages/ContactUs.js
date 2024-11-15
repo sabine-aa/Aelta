@@ -162,7 +162,7 @@ const ContactUs = () => {
 
     const timestamp = new Date().toISOString();
 
-    const url = `https://script.google.com/macros/s/AKfycbx_dfr4t-JRo2Xfz_e4DeBH2K58eJdKrPBtUBKUjzWinszP32rLKg0CVjFmZS7ERPb2/exec?StudentFullName=${encodeURIComponent(
+    const url = `https://script.google.com/macros/s/AKfycbw5I6_AG9Zi13zii8O2POXviFGkwVAe86dfVESxZfc1qybMHHAIwoUS9nwSvieEQEmj/exec?StudentFullName=${encodeURIComponent(
       StudentFullName
     )}&StudentSchoolName=${encodeURIComponent(
       StudentSchoolName
@@ -201,15 +201,7 @@ const ContactUs = () => {
       window.location.reload();
     }, 2000);
   };
-  const isFormValid = () => {
-    return (
-      formData.interestsParams &&
-      formData.daysParams &&
-      formData.timesParams &&
-      formData.healthParams &&
-      formData.Referral
-    );
-  };
+ 
 
   return (
     <div className="bg-gray-100">

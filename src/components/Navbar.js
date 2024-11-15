@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../assets/logoAelta.png";
@@ -7,6 +8,7 @@ import { debounce } from "lodash";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logoWidth, setLogoWidth] = useState(80); 
   const location = useLocation();
 
   const toggleMenu = () => {
@@ -14,14 +16,18 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Scroll to the top whenever the route changes
+    
     window.scrollTo(0, 0);
   }, [location]);
 
   useEffect(() => {
     const handleScroll = debounce(() => {
-      setScrolled(window.scrollY > 100);
-    }, 0);
+      const scrollPosition = window.scrollY;
+      setScrolled(scrollPosition > 100);
+
+      const newLogoWidth = Math.max(56, Math.min(80 - scrollPosition / 10, 80));
+      setLogoWidth(newLogoWidth);
+    }, 10);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -41,13 +47,12 @@ const Navbar = () => {
             <img
               src={logo}
               alt="logo"
-              className={`mx-2 md:mx-2 my-2 transition-all ${
-                scrolled ? "w-14" : "w-20"
-              }`}
+              className="mx-2 md:mx-2 my-2 transition-all"
+              style={{ width: `${logoWidth}px` }} 
             />
             <div
               className={`text-white font-bold transition-all ${
-                scrolled ? "text-xl" : "text-3xl"
+                scrolled ? "text-2xl" : "text-3xl"
               }`}
             >
               AELTA

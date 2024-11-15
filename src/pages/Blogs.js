@@ -2,7 +2,7 @@ import React from "react";
 import BlogCard from "../components/BlogsCard";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import blogsCover from "../assets/coverBlog.jpg";
+import blogsCover from "../assets/blogCover.jpg";
 import image2 from "../assets/cover.jpg";
 import image3 from "../assets/blogs3.jpg";
 import image1 from "../assets/blogsCover.jpg";
@@ -39,12 +39,15 @@ const Blogs = () => {
   return (
     <div>
       <Navbar />
-      <div>
-        <img
-          src={blogsCover}
-          alt="Blog Cover"
-          className="w-full h-80 object-cover "
-        />
+      <div
+        className="relative bg-cover bg-center h-80 "
+        style={{ backgroundImage: `url(${blogsCover})` }}
+      >
+        <div className="bg-black bg-opacity-50 h-full flex items-center justify-left ">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white text-center  px-4">
+            Our Blogs
+          </h1>
+        </div>
       </div>
       <div className="container mx-auto p-5">
         <h1 className="text-3xl text-[#5a38a7] font-bold mb-5">
