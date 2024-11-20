@@ -44,7 +44,7 @@ const Blogs = () => {
         style={{ backgroundImage: `url(${blogsCover})` }}
       >
         <div className="bg-black bg-opacity-50 h-full flex items-center justify-left ">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white text-center  px-4">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white text-center pl-5 sm:pl-24 md:pl-48 lg:pl-80 px-4">
             Our Blogs
           </h1>
         </div>

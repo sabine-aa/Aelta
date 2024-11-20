@@ -9,6 +9,11 @@ import BlogsDetails from "./components/BlogsDetails";
 import ContactUs from "./pages/ContactUs";
 import TeamDetail from "./components/TeamDetail";
 import CourseDetail from "./components/CourseDetail";
+import Dashboard from "./admin/pages/DashboardHome";
+import ManageBlogs from "./admin/pages/ManageBlogs";
+import ManageCourses from "./admin/pages/ManageCourses";
+import ManageTeams from "./admin/pages/ManageTeams";
+import Login from "./admin/pages/AdminLogin";
 
 function App() {
   return (
@@ -25,6 +30,11 @@ function App() {
           <Route path="/team/:slug" element={<TeamDetail />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/manage-blogs" element={<ManageBlogs />} />
+          <Route path="/admin/manage-courses" element={<ManageCourses />} />
+          <Route path="/admin/manage-teams" element={<ManageTeams />} />
         </Routes>
       </div>
     </Router>

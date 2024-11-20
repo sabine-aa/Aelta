@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import teamPhoto from "../assets/teamPhoto.png"; 
-import missionImage from "../assets/mission.png";
-import visionImage from "../assets/vision.png"; 
+import teamPhoto from "../assets/aboutUs.jpg";
+import missionImage from "../assets/missionn.jpg";
+import visionImage from "../assets/vision.jpg";
 import TeamCard from "../components/TeamCard";
 import imageAlice from "../assets/alice.jpg";
 import imageBob from "../assets/bobSmith.jpg";
@@ -38,7 +38,6 @@ const AboutUs = () => {
     <div>
       <Navbar />
 
-      {/* Hero Section */}
       <div
         className="relative bg-cover bg-center h-80"
         style={{ backgroundImage: `url(${teamPhoto})` }}
@@ -64,43 +63,53 @@ const AboutUs = () => {
       </div>
 
       {/* Mission and Vision Section */}
-      <div className="container mx-auto px-5 py-10 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div className="container mx-auto px-5 py-10 ">
         {/* Mission Section */}
-        <div className="flex flex-col items-center text-center ">
-          <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
-            Our Mission
-          </h2>
-          <p className="text-gray-700 text-lg mb-4">
-            AELTA is committed to providing personalized tutorials and
-            professional development services that enhance academic skills. We
-            strive to bridge educational opportunities and ensure access to
-            diverse resources, enabling students to succeed in their academic
-            pursuits.
-          </p>
-          <img
-            src={missionImage}
-            alt="Our Mission"
-            className="rounded-lg shadow-lg w-4/5 md:w-full"
-          />
+        <div className="flex flex-col lg:flex-row items-center text-center md:text-left">
+          <div className="flex-1 lg:ml-4">
+            <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
+              Our Mission
+            </h2>
+            <p className="text-gray-700 text-lg ">
+              AELTA is committed to providing personalized tutorials and
+              professional development services that enhance academic skills. We
+              strive to bridge educational opportunities and ensure access to
+              diverse resources, enabling students to succeed in their academic
+              pursuits.
+            </p>
+          </div>
+          <div className="flex-1">
+            <img
+              src={missionImage}
+              alt="Our Mission"
+              className=" w-full"
+            />
+          </div>
         </div>
 
         {/* Vision Section */}
-        <div className="flex flex-col items-center text-center">
-          <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
-            Our Vision
-          </h2>
-          <p className="text-gray-700 text-lg mb-4">
-            AELTA envisions a dynamic educational landscape where every learner
-            is empowered to achieve academic excellence and proficiency,
-            fostering a culture of collaboration and lifelong learning.
-          </p>
-          <img
-            src={visionImage}
-            alt="Our Vision"
-            className="rounded-lg shadow-lg w-4/5 md:w-full"
-          />
+        <div className="flex flex-col lg:flex-row-reverse items-center text-center  md:text-left">
+          <div className="flex-1">
+            <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
+              Our Vision
+            </h2>
+            <p className="text-gray-700 text-lg mb-4 ">
+              AELTA envisions a dynamic educational landscape where every
+              learner is empowered to achieve academic excellence and
+              proficiency, fostering a culture of collaboration and lifelong
+              learning.
+            </p>
+          </div>
+          <div className="flex-1 lg:ml-4">
+            <img
+              src={visionImage}
+              alt="Our Vision"
+              className=" w-full"
+            />
+          </div>
         </div>
       </div>
+
       <div className="container mx-auto px-5 py-10 text-center">
         <h2 className="text-3xl font-semibold mb-4 text-[#360182]">
           Meet Our Team

@@ -39,7 +39,8 @@ const Footer = () => {
                 <FontAwesomeIcon icon={faInstagram} className="w-6 h-6" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/aelta-lb-5a4805338"
+                target="_blank"
                 className="hover:text-[#b3902f]"
                 aria-label="LinkedIn"
               >
@@ -89,6 +90,11 @@ const Footer = () => {
               <li>
                 <a href="#" className="hover:text-[#b3902f]">
                   IELTS
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-[#b3902f]">
+                  GRE
                 </a>
               </li>
             </ul>
