@@ -39,20 +39,66 @@ const ManageBlogs = () => {
   };
 
   // Create a new blog post
+  // const handleCreateBlog = async (e) => {
+  //   e.preventDefault();
+  //   console.log("Creating blog with data:", newBlog); // Log the data to check the structure
+
+  //   try {
+  //     const response = await axios.post(
+  //       "http://localhost:5000/api/blogs",
+  //       newBlog
+  //     );
+  //     setBlogs([...blogs, response.data]);
+  //     setNewBlog({
+  //       title: "",
+  //       description: "",
+  //       image: "",
+  //       content: "",
+  //       largeDescription: "",
+  //       slug: "",
+  //       author: "",
+  //     });
+  //   } catch (error) {
+  //     console.error("Error creating blog:", error);
+  //     console.log(error.response.data); // Log the backend error message
+  //   }
+  // };
   const handleCreateBlog = async (e) => {
     e.preventDefault();
-    console.log("Creating blog with data:", newBlog); // Log the data to check the structure
+
+    // Prepare form-data for the request
+    const formData = new FormData();
+    formData.append("title", newBlog.title);
+    formData.append("description", newBlog.description);
+    formData.append("content", newBlog.content);
+    formData.append("largeDescription", newBlog.largeDescription);
+    formData.append("slug", newBlog.slug);
+    formData.append("author", newBlog.author);
+    if (newBlog.image) {
+      formData.append("image", newBlog.image); // Add the file only if present
+    }
 
     try {
+      // Send the POST request with form-data
       const response = await axios.post(
         "http://localhost:5000/api/blogs",
-        newBlog
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Indicate a file upload
+          },
+          withCredentials: true, // Include credentials if needed
+        }
       );
-      setBlogs([...blogs, response.data]);
+
+      console.log(response.data.message);
+
+      // Update blogs and reset form
+      setBlogs([...blogs, response.data.blog]);
       setNewBlog({
         title: "",
         description: "",
-        image: "",
+        image: null,
         content: "",
         largeDescription: "",
         slug: "",
@@ -60,7 +106,9 @@ const ManageBlogs = () => {
       });
     } catch (error) {
       console.error("Error creating blog:", error);
-      console.log(error.response.data); // Log the backend error message
+      if (error.response) {
+        console.log(error.response.data); // Log backend error
+      }
     }
   };
 
@@ -152,14 +200,23 @@ const ManageBlogs = () => {
                 placeholder="Blog Description"
                 className="w-full p-2 border rounded-md"
               />
-              <input
+              {/* <input
                 type="text"
                 name="image"
                 value={newBlog.image}
                 onChange={handleInputChange}
                 placeholder="Image URL"
                 className="w-full p-2 border rounded-md"
+              /> */}
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={(e) =>
+                  setNewBlog({ ...newBlog, image: e.target.files[0] })
+                }
               />
+
               <textarea
                 name="content"
                 value={newBlog.content}
