@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const AdminSidebar = () => {
   return (
-    <div className="w-64 h-full bg-gray-900 text-white fixed">
+    <div className="w-64 h-screen bg-gray-900 text-white sticky top-0">
       <ul className="space-y-4 p-4">
         <li>
           <Link to="/admin/dashboard" className="hover:text-gray-300">

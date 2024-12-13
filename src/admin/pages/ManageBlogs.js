@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AdminNavbar from "../components/AdminNavbar";
-// import AdminSidebar from "../components/AdminSidebar";
+import AdminSidebar from "../components/AdminSidebar";
 import AdminFooter from "../components/AdminFooter";
 import DataTable from "../components/DataTable";
 
@@ -38,35 +38,9 @@ const ManageBlogs = () => {
     setNewBlog({ ...newBlog, [name]: value });
   };
 
-  // Create a new blog post
-  // const handleCreateBlog = async (e) => {
-  //   e.preventDefault();
-  //   console.log("Creating blog with data:", newBlog); // Log the data to check the structure
-
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:5000/api/blogs",
-  //       newBlog
-  //     );
-  //     setBlogs([...blogs, response.data]);
-  //     setNewBlog({
-  //       title: "",
-  //       description: "",
-  //       image: "",
-  //       content: "",
-  //       largeDescription: "",
-  //       slug: "",
-  //       author: "",
-  //     });
-  //   } catch (error) {
-  //     console.error("Error creating blog:", error);
-  //     console.log(error.response.data); // Log the backend error message
-  //   }
-  // };
   const handleCreateBlog = async (e) => {
     e.preventDefault();
 
-    // Prepare form-data for the request
     const formData = new FormData();
     formData.append("title", newBlog.title);
     formData.append("description", newBlog.description);
@@ -75,39 +49,23 @@ const ManageBlogs = () => {
     formData.append("slug", newBlog.slug);
     formData.append("author", newBlog.author);
     if (newBlog.image) {
-      formData.append("image", newBlog.image); // Add the file only if present
+      formData.append("image", newBlog.image); // Attach the image file
     }
 
     try {
-      // Send the POST request with form-data
       const response = await axios.post(
         "http://localhost:5000/api/blogs",
         formData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data", // Indicate a file upload
-          },
-          withCredentials: true, // Include credentials if needed
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
-
-      console.log(response.data.message);
-
-      // Update blogs and reset form
+      console.log(response.data.message, "success");
       setBlogs([...blogs, response.data.blog]);
-      setNewBlog({
-        title: "",
-        description: "",
-        image: null,
-        content: "",
-        largeDescription: "",
-        slug: "",
-        author: "",
-      });
     } catch (error) {
       console.error("Error creating blog:", error);
       if (error.response) {
-        console.log(error.response.data); // Log backend error
+        console.log(error.response.data);
       }
     }
   };
@@ -122,38 +80,43 @@ const ManageBlogs = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
 
-    // Debugging: Ensure selectedBlog contains the correct data
-    console.log("Selected Blog before update:", selectedBlog);
-
-    if (!selectedBlog?.slug) {
-      console.error("Slug is missing. Cannot update the blog.");
-      return;
+    const formData = new FormData();
+    formData.append("title", selectedBlog.title);
+    formData.append("description", selectedBlog.description);
+    formData.append("content", selectedBlog.content);
+    formData.append("largeDescription", selectedBlog.largeDescription);
+    formData.append("slug", selectedBlog.slug);
+    formData.append("author", selectedBlog.author);
+    if (selectedBlog.image && selectedBlog.image instanceof File) {
+      formData.append("image", selectedBlog.image); // Attach the new file if selected
     }
 
     try {
-      // Make PUT request with proper headers
+      // PUT request to update the blog using slug
       const response = await axios.put(
-        `http://localhost:5000/api/blogs/${selectedBlog.slug}`, // Backend API
-        selectedBlog, // Data to update
+        `http://localhost:5000/api/blogs/${selectedBlog.slug}`, // Use slug for identification
+        formData,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
 
-      // Update blogs list with the updated blog
-      setBlogs(
-        blogs.map((blog) =>
+      // Update the blogs list with the updated blog
+      setBlogs((prevBlogs) =>
+        prevBlogs.map((blog) =>
           blog.slug === selectedBlog.slug ? response.data : blog
         )
       );
 
-      // Reset the selected blog
+      // Reset the selected blog to stop editing mode
       setSelectedBlog(null);
+
+      // Refresh the page after a short delay (optional for user feedback)
+      setTimeout(() => {
+        window.location.reload();
+      }, 100); // Adjust delay as needed
     } catch (error) {
       console.error("Error updating blog:", error);
-      console.error("Backend error:", error.response?.data);
     }
   };
 
@@ -172,10 +135,10 @@ const ManageBlogs = () => {
 
   return (
     <div className="flex">
-      {/* // <AdminSidebar /> */}
-      <div className="flex-1">
+      <AdminSidebar />
+      <div className="flex-1 flex flex-col">
         <AdminNavbar />
-        <div className="p-20">
+        <div className="p-10">
           <h1 className="text-2xl font-bold mb-4">Manage Blogs</h1>
 
           {/* Create Blog Form */}
@@ -362,17 +325,17 @@ const ManageBlogs = () => {
               "Created At": new Date(blog.date).toLocaleDateString(),
               Actions:
                 blog.slug === selectedBlog?.slug ? (
-                  <div>Editing...</div> // You can display "Editing..." or other info
+                  <div>Editing...</div> // Only show "Editing..." for the selected blog
                 ) : (
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => handleUpdateBlog(blog.slug)} // Update button
+                      onClick={() => handleUpdateBlog(blog.slug)} // Use slug to select blog
                       className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
                     >
                       Update
                     </button>
                     <button
-                      onClick={() => handleDeleteBlog(blog.slug)}
+                      onClick={() => handleDeleteBlog(blog.slug)} // Use slug for deleting
                       className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                     >
                       Delete
