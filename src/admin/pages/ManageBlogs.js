@@ -6,7 +6,17 @@ import AdminFooter from "../components/AdminFooter";
 import DataTable from "../components/DataTable";
 
 const ManageBlogs = () => {
-  const columns = ["Title", "Author", "Created At", "Actions"];
+  const columns = [
+    "Title",
+    "Description",
+    "Image",
+    "Content",
+    "LargeDescription",
+    "Slug",
+    "Author",
+    "Created At",
+    "Actions",
+  ];
   const [blogs, setBlogs] = useState([]);
   const [newBlog, setNewBlog] = useState({
     title: "",
@@ -328,6 +338,17 @@ const ManageBlogs = () => {
             columns={columns}
             data={blogs.map((blog) => ({
               Title: blog.title,
+              Description: blog.description,
+              Image: (
+                <img
+                  src={blog.image}
+                  alt={blog.title}
+                  className="h-20 w-20 object-cover rounded-md"
+                />
+              ),
+              Content: blog.content,
+              LargeDescription: blog.largeDescription,
+              Slug: blog.slug,
               Author: blog.author,
               "Created At": new Date(blog.date).toLocaleDateString(),
               Actions:
