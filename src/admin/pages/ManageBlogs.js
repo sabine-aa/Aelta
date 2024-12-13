@@ -73,7 +73,10 @@ const ManageBlogs = () => {
   // Update an existing blog
   const handleUpdateBlog = (slug) => {
     const blogToUpdate = blogs.find((blog) => blog.slug === slug);
-    setSelectedBlog(blogToUpdate); // Set the selected blog for editing
+    setSelectedBlog({
+      ...blogToUpdate,
+      originalSlug: blogToUpdate.slug, // Preserve the original slug
+    });
   };
 
   // Handle form submission for updating a blog
@@ -85,16 +88,20 @@ const ManageBlogs = () => {
     formData.append("description", selectedBlog.description);
     formData.append("content", selectedBlog.content);
     formData.append("largeDescription", selectedBlog.largeDescription);
-    formData.append("slug", selectedBlog.slug);
+    formData.append("slug", selectedBlog.slug); // Updated slug
     formData.append("author", selectedBlog.author);
+
     if (selectedBlog.image && selectedBlog.image instanceof File) {
       formData.append("image", selectedBlog.image); // Attach the new file if selected
     }
 
     try {
-      // PUT request to update the blog using slug
+      console.log("Original Slug:", selectedBlog.originalSlug); // Debugging
+      console.log("Updated Slug:", selectedBlog.slug);
+
+      // Use originalSlug for the endpoint
       const response = await axios.put(
-        `http://localhost:5000/api/blogs/${selectedBlog.slug}`, // Use slug for identification
+        `http://localhost:5000/api/blogs/${selectedBlog.originalSlug}`, // Correct endpoint
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -104,17 +111,17 @@ const ManageBlogs = () => {
       // Update the blogs list with the updated blog
       setBlogs((prevBlogs) =>
         prevBlogs.map((blog) =>
-          blog.slug === selectedBlog.slug ? response.data : blog
+          blog.slug === selectedBlog.originalSlug ? response.data : blog
         )
       );
 
       // Reset the selected blog to stop editing mode
       setSelectedBlog(null);
 
-      // Refresh the page after a short delay (optional for user feedback)
+      // Optional: Refresh the page for updated data
       setTimeout(() => {
         window.location.reload();
-      }, 100); // Adjust delay as needed
+      }, 100);
     } catch (error) {
       console.error("Error updating blog:", error);
     }
