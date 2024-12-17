@@ -505,7 +505,7 @@ const ManageBlogs = () => {
   return (
     <div className="flex min-h-screen">
       <AdminSidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col overflow-x-hidden">
         <AdminNavbar />
         <div className="p-6 space-y-6">
           <h1 className="text-2xl font-bold">Manage Blogs</h1>
