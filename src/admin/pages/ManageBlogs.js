@@ -120,6 +120,11 @@ const ManageBlogs = () => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedBlog((prev) => ({ ...prev, image: file }));
+  };
+
   return (
     <div className="flex min-h-screen">
       <AdminSidebar />
@@ -235,17 +240,13 @@ const ManageBlogs = () => {
                   placeholder="Slug"
                   className="p-2 border rounded-md"
                 />
+               
                 <input
                   type="file"
-                  name="image"
                   accept="image/*"
-                  onChange={(e) =>
-                    setSelectedBlog({
-                      ...selectedBlog,
-                      image: e.target.files[0],
-                    })
-                  }
+                  onChange={handleFileChange}
                 />
+
                 <textarea
                   name="description"
                   value={selectedBlog.description}
