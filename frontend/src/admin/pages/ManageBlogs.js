@@ -69,6 +69,8 @@ const ManageBlogs = () => {
         { headers: { "Content-Type": "multipart/form-data" } }
       );
       setBlogs([...blogs, response.data.blog]);
+      // Refresh the page after successful blog creation
+      window.location.reload();
     } catch (error) {
       console.error("Error creating blog:", error);
     }
@@ -240,7 +242,7 @@ const ManageBlogs = () => {
                   placeholder="Slug"
                   className="p-2 border rounded-md"
                 />
-               
+
                 <input
                   type="file"
                   accept="image/*"
