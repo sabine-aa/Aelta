@@ -9,11 +9,8 @@ const Login = () => {
         </h1>
         <form>
           <div className="mb-6">
-<<<<<<< HEAD
-            <label className="block text-xl font-medium mb-2 text-gray-600">
-=======
+            
             <label className="block text-lg font-medium mb-2 text-gray-600">
->>>>>>> 6fc7dcc27e69c6fc2f085a57f52bd1244e84db5b
               Email
             </label>
             <input
@@ -23,11 +20,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-<<<<<<< HEAD
             <label className="block text-xl font-medium mb-2 text-gray-600">
-=======
-            <label className="block text-lg font-medium mb-2 text-gray-600">
->>>>>>> 6fc7dcc27e69c6fc2f085a57f52bd1244e84db5b
               Password
             </label>
             <input
