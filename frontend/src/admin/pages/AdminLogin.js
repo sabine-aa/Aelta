@@ -20,7 +20,7 @@ const Login = () => {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-xl font-medium mb-2 text-gray-600">
+            <label className="block text-lg font-medium mb-2 text-gray-600">
               Password
             </label>
             <input
