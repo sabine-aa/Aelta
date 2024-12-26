@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import connectDB from "./config/db.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 import cors from "cors";
 import path from "path";
 import fs from "fs";
@@ -37,6 +39,8 @@ app.use(express.urlencoded({ extended: true })); // Parse form data
 
 // Routes
 app.use("/api/blogs", blogRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
