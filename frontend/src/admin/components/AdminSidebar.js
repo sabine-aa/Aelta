@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdminSidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -62,7 +63,14 @@ const AdminSidebar = () => {
           </svg>
         </button>
 
-        <h2 className="text-lg font-semibold mb-6">Admin Panel</h2>
+        <h2 className="text-lg font-semibold mb-6">
+          <Link
+            to="/admin-dashboard"
+            className="p-2 hover:text-gray-200 transition"
+          >
+            Admin Panel
+          </Link>
+        </h2>
         <ul className="space-y-4">
           {links.map((link) => (
             <li key={link.name}>

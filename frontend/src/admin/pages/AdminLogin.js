@@ -14,8 +14,8 @@ const Login = () => {
     const token = localStorage.getItem("token");
     if (token) {
       // Validate the token (optional backend validation)
-      fetch("http://localhost:5000/api/auth/validate-token", {
-        method: "POST",
+      fetch("http://localhost:5000/api/users/protected", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
