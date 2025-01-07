@@ -9,6 +9,7 @@ const AdminSidebar = () => {
     { name: "Manage Blogs", to: "/admin/manage-blogs" },
     { name: "Manage Courses", to: "/admin/manage-courses" },
     { name: "Manage Teams", to: "/admin/manage-teams" },
+    { name: "Manage Users", to: "/admin/manage-users" },
   ];
 
   return (

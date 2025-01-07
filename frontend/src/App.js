@@ -13,6 +13,7 @@ import Dashboard from "./admin/pages/DashboardHome";
 import ManageBlogs from "./admin/pages/ManageBlogs";
 import ManageCourses from "./admin/pages/ManageCourses";
 import ManageTeams from "./admin/pages/ManageTeams";
+import ManageUsers from "./admin/pages/ManageUsers";
 import Login from "./admin/pages/AdminLogin";
 import PrivateRoute from "./admin/components/PrivateRoute";
 
@@ -61,6 +62,14 @@ function App() {
             element={
               <PrivateRoute>
                 <ManageTeams />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/manage-users"
+            element={
+              <PrivateRoute>
+                <ManageUsers />
               </PrivateRoute>
             }
           />
