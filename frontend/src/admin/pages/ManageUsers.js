@@ -24,11 +24,17 @@ const ManageUsers = () => {
     }
   }, []);
 
+
   // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/users/");
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:5000/api/users/", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -36,23 +42,6 @@ const ManageUsers = () => {
     };
     fetchUsers();
   }, []);
-  // Fetch all users
-  // useEffect(() => {
-  //   const fetchUsers = async () => {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const response = await axios.get("http://localhost:5000/api/users/", {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       setUsers(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching users:", error);
-  //     }
-  //   };
-  //   fetchUsers();
-  // }, []);
 
   // Handle input changes for creating a user
   const handleInputChange = (e) => {
