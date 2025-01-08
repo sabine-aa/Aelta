@@ -24,7 +24,6 @@ const ManageUsers = () => {
     }
   }, []);
 
-
   // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
@@ -54,7 +53,7 @@ const ManageUsers = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/create",
+        "http://localhost:5000/api/users/",
         newUser
       );
       setUsers([...users, response.data]);
