@@ -53,7 +53,7 @@ const ManageUsers = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/",
+        "http://localhost:5000/api/users/create",
         newUser
       );
       setUsers([...users, response.data]);
