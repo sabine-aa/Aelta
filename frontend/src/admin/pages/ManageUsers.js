@@ -95,10 +95,16 @@ const ManageUsers = () => {
   // Handle deleting a user
   const handleDeleteUser = async (userId) => {
     try {
+      // Make the DELETE request to the backend
       await axios.delete(`http://localhost:5000/api/users/${userId}`);
-      setUsers(users.filter((user) => user._id !== userId));
+      // Update the state to remove the deleted user
+      setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
+      console.log("User deleted successfully");
     } catch (error) {
-      console.error("Error deleting user:", error);
+      console.error(
+        "Error deleting user:",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
