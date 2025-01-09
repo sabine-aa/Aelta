@@ -28,7 +28,7 @@ export const getUserById = async (req, res) => {
 
 // POST (Create) a new user
 export const createUser = async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   try {
     // Check if the user already exists
@@ -38,7 +38,7 @@ export const createUser = async (req, res) => {
     }
 
     // Create a new user
-    const newUser = new User({ firstName, lastName, email, password, role });
+    const newUser = new User({ firstName, lastName, email, password });
     console.log("Original password:", password); // Log the original password
     newUser.password = await bcrypt.hash(password, 10); // Hash password
     console.log("Hashed password:", newUser.password); // Log the hashed password
@@ -54,7 +54,7 @@ export const createUser = async (req, res) => {
 
 // PUT (Update) an existing user
 export const updateUser = async (req, res) => {
-  const { firstName, lastName, email, password, role } = req.body;
+  const { firstName, lastName, email, password } = req.body;
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -65,7 +65,6 @@ export const updateUser = async (req, res) => {
     user.firstName = firstName || user.firstName;
     user.lastName = lastName || user.lastName;
     user.email = email || user.email;
-    user.role = role || user.role;
 
     // If the password is being updated, hash the new password
     if (password) {
