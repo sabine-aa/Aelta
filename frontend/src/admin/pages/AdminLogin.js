@@ -31,6 +31,7 @@ const Login = () => {
         });
     }
   }, [navigate]);
+  // Inside Login.js
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -43,17 +44,18 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }), // Ensure plain text password is sent
       });
 
       if (!response.ok) {
-        throw new Error("Invalid email or password");
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Invalid email or password");
       }
 
       const data = await response.json();
       setSuccess("Login successful!");
-      localStorage.setItem("token", data.token); // Save token
-      navigate("/admin-dashboard"); // Redirect to the admin dashboard
+      localStorage.setItem("token", data.token);
+      navigate("/admin-dashboard");
     } catch (err) {
       setError(err.message);
     }

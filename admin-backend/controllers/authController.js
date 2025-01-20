@@ -21,7 +21,6 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
-
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -32,7 +31,7 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // Check password
+    // Compare plain-text password with hashed password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });

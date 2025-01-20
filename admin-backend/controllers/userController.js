@@ -37,17 +37,13 @@ export const createUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Create a new user
+    // Create a new user (password will be hashed via schema pre-save hook)
     const newUser = new User({ firstName, lastName, email, password });
-    console.log("Original password:", password); // Log the original password
-    newUser.password = await bcrypt.hash(password, 10); // Hash password
-    console.log("Hashed password:", newUser.password); // Log the hashed password
-    // Hash password before saving
+    await newUser.save();
 
-    await newUser.save(); // Save user to database
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
-    console.error(error);
+    console.error("Error creating user:", error);
     res.status(500).json({ message: "Server error" });
   }
 };

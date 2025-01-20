@@ -52,19 +52,29 @@ const ManageUsers = () => {
   const handleCreateUser = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token");
       const response = await axios.post(
         "http://localhost:5000/api/users/create",
-        newUser
+        newUser,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-      setUsers([...users, response.data]);
-      setNewUser({
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+
+      // Refetch users after creating a new one
+      const updatedUsers = await axios.get("http://localhost:5000/api/users/", {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      setUsers(updatedUsers.data);
+
+      setNewUser({ firstName: "", lastName: "", email: "", password: "" });
     } catch (error) {
-      console.error("Error creating user:", error);
+      console.error(
+        "Error creating user:",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
