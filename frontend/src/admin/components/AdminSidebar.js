@@ -1,20 +1,40 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const AdminSidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [userRole, setUserRole] = useState(null);
 
+  // Get user role from token
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        setUserRole(decodedToken.role); // Extract the role
+      } catch (error) {
+        console.error("Invalid token", error);
+        localStorage.removeItem("token"); // Remove invalid token
+      }
+    }
+  }, []);
+
+  // Define sidebar links without manage users initially
   const links = [
     { name: "Manage Blogs", to: "/admin/manage-blogs" },
     { name: "Manage Courses", to: "/admin/manage-courses" },
     { name: "Manage Teams", to: "/admin/manage-teams" },
-    { name: "Manage Users", to: "/admin/manage-users" },
   ];
+
+  // Conditionally add Manage Users link if the role is admin
+  if (userRole === "admin") {
+    links.push({ name: "Manage Users", to: "/admin/manage-users" });
+  }
 
   return (
     <div className="relative">
-      {/* Hamburger Icon (visible on md and smaller screens) */}
       {!isSidebarOpen && (
         <button
           className="fixed top-4 right-4 text-white z-50 md:hidden"
@@ -37,13 +57,11 @@ const AdminSidebar = () => {
         </button>
       )}
 
-      {/* Sidebar */}
       <aside
-        className={`bg-gray-700 text-white w-64 min-h-screen  p-4 fixed top-0 left-0 transform transition-all duration-300 md:sticky md:translate-x-0 ${
+        className={`bg-gray-700 text-white w-64 min-h-screen p-4 fixed top-0 left-0 transform transition-all duration-300 md:sticky md:translate-x-0 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } z-50`}
       >
-        {/* Close Button (visible on md and smaller screens) */}
         <button
           className="absolute top-4 right-4 text-white md:hidden"
           onClick={() => setIsSidebarOpen(false)}
@@ -90,7 +108,6 @@ const AdminSidebar = () => {
         </ul>
       </aside>
 
-      {/* Overlay (visible when sidebar is open on smaller screens) */}
       {isSidebarOpen && (
         <div
           className="fixed top-0 left-0 right-0 bottom-0 bg-black opacity-50 z-40 md:hidden"

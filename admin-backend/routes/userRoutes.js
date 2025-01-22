@@ -1,14 +1,3 @@
-// import express from "express";
-// import authMiddleware from "../middlewares/authMiddleware.js";
-
-// const router = express.Router();
-
-// router.get("/protected", authMiddleware, (req, res) => {
-//   res.status(200).json({ message: "Access granted", user: req.user });
-// });
-
-// export default router;
-
 import express from "express";
 import {
   getAllUsers,
@@ -17,13 +6,18 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/userController.js";
+import {
+  authMiddleware,
+  authorizeAdmin,
+} from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
-router.post("/create", createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+// Protect manage users route - only admins can access
+router.get("/", authMiddleware, authorizeAdmin, getAllUsers);
+router.get("/:id", authMiddleware, getUserById);
+router.post("/create", authMiddleware, authorizeAdmin, createUser);
+router.put("/:id", authMiddleware, updateUser);
+router.delete("/:id", authMiddleware, authorizeAdmin, deleteUser);
 
 export default router;

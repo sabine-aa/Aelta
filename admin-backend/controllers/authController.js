@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const register = async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
@@ -12,7 +12,13 @@ export const register = async (req, res) => {
     }
 
     // Create new user
-    const newUser = new User({ firstName, lastName, email, password });
+    const newUser = new User({
+      firstName,
+      lastName,
+      email,
+      password,
+      role: role || "user",
+    }); // Assign 'user' by default});
     await newUser.save();
 
     res.status(201).json({ message: "User registered successfully" });
@@ -39,7 +45,7 @@ export const login = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
