@@ -87,10 +87,24 @@ const ManageUsers = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token");
+      const updatedUserData = { ...selectedUser };
+
+      // Remove password if empty to prevent overwriting with empty string
+      if (!selectedUser.password) {
+        delete updatedUserData.password;
+      }
+
       const response = await axios.put(
         `http://localhost:5000/api/users/${selectedUser._id}`,
-        selectedUser
+        updatedUserData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
+
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
           user._id === selectedUser._id ? response.data : user
@@ -98,7 +112,10 @@ const ManageUsers = () => {
       );
       setSelectedUser(null);
     } catch (error) {
-      console.error("Error updating user:", error);
+      console.error(
+        "Error updating user:",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
