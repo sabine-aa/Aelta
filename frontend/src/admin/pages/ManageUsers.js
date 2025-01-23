@@ -104,6 +104,7 @@ const ManageUsers = () => {
           },
         }
       );
+      window.location.reload(); // Refresh the page after update
 
       setUsers((prevUsers) =>
         prevUsers.map((user) =>
@@ -121,6 +122,10 @@ const ManageUsers = () => {
 
   // Handle deleting a user
   const handleDeleteUser = async (userId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to permanently delete this user?"
+    );
+    if (!confirmDelete) return;
     try {
       // Make the DELETE request to the backend
       await axios.delete(`http://localhost:5000/api/users/${userId}`);
