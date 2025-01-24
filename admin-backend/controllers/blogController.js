@@ -98,4 +98,21 @@ const deleteBlog = async (req, res) => {
   }
 };
 
-export { getAllBlogs, getBlogBySlug, createBlog, updateBlog, deleteBlog };
+// Get blog count
+const getBlogCount = async (req, res) => {
+  try {
+    const count = await Blog.countDocuments();
+    res.status(200).json({ count });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+export {
+  getAllBlogs,
+  getBlogBySlug,
+  createBlog,
+  updateBlog,
+  deleteBlog,
+  getBlogCount,
+};

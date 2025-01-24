@@ -7,6 +7,7 @@ import {
   createBlog,
   updateBlog,
   deleteBlog,
+  getBlogCount,
 } from "../controllers/blogController.js";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
@@ -25,6 +26,7 @@ const upload = multer({ storage });
 const router = express.Router();
 
 router.get("/", getAllBlogs);
+router.get("/count", getBlogCount);
 router.get("/:slug", getBlogBySlug);
 router.post("/", upload.single("image"), createBlog);
 router.put("/:slug", upload.single("image"), updateBlog);

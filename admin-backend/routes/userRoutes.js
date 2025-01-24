@@ -5,6 +5,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
+  getUserCount,
 } from "../controllers/userController.js";
 import {
   authMiddleware,
@@ -15,6 +16,7 @@ const router = express.Router();
 
 // Protect manage users route - only admins can access
 router.get("/", authMiddleware, authorizeAdmin, getAllUsers);
+router.get("/count", getUserCount);
 router.get("/:id", authMiddleware, getUserById);
 router.post("/create", authMiddleware, authorizeAdmin, createUser);
 router.put("/:id", authMiddleware, updateUser);
