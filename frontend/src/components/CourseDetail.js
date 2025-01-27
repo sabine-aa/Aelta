@@ -1,124 +1,82 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import SAT from "../assets/sat.png";
-import TOEFL from "../assets/toefl.png";
-import IELTS from "../assets/ielts.png";
-import GRE from "../assets/gre.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const courseData = {
-  sat: {
-    name: "SAT Preparation",
-    description:
-      "The SAT is a standardized test widely used for college admissions in the United States. Our SAT preparation course focuses on enhancing students' skills in critical reading, writing, and math, helping them achieve their target scores for college applications.",
-    details:
-      "Our SAT course offers in-depth training across all sections: Evidence-Based Reading, Writing and Language, and Math. We provide tailored practice sessions, simulated exams, and proven test-taking strategies to help students excel. Our instructors ensure that students build the confidence and skills needed to tackle the SAT and secure admission to their desired college.",
-    preparationSection: `
-      <div class="preparation">
-        <h2 class="text-2xl font-bold text-[#360182] mb-4">Our Approach to SAT Preparation</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          We equip students with the necessary skills for college admissions by focusing on critical reading, effective writing, and math problem-solving. Our program emphasizes real-world practice and personalized strategies to build confidence and readiness for the SAT.
-        </p>
-        <h3 class="text-xl font-semibold text-[#360182] mb-3">Setting the Stage for College Success</h3>
-        <p class="text-lg text-gray-700 mb-6">
-          Excelling on the SAT can open doors to prestigious universities and scholarship opportunities. Our SAT preparation not only boosts test scores but also empowers students with lifelong skills, helping them start their college journey on a solid foundation.
-        </p>
-      </div>
-    `,
-    image: SAT,
-  },
-  toefl: {
-    name: "TOEFL Preparation",
-    description:
-      "The TOEFL (Test of English as a Foreign Language) is essential for students looking to study in English-speaking countries. Our TOEFL course focuses on the four core language skills: reading, listening, speaking, and writing, preparing students for successful communication in academic environments.",
-    details:
-      "Our TOEFL preparation course provides detailed practice in each skill area with targeted exercises and real exam simulations. Students engage in interactive lessons, listening exercises, and essay writing to build fluency and accuracy. We also provide personalized feedback to ensure students are fully prepared to meet the TOEFL requirements of top universities worldwide.",
-    preparationSection: `
-      <div class="preparation">
-        <h2 class="text-2xl font-bold text-[#360182] mb-4">Our Approach to TOEFL Preparation</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          Through tailored practice, real-time simulations, and language mastery exercises, we ensure students are ready to excel on the TOEFL. This course builds each student's confidence, language fluency, and readiness for academic success in English-speaking environments.
-        </p>
-        <h3 class="text-xl font-semibold text-[#360182] mb-3">Building Language Skills for Global Opportunities</h3>
-        <p class="text-lg text-gray-700 mb-6">
-          A strong TOEFL score can pave the way for academic and professional achievements in English-speaking countries. Our program provides students with the linguistic and cultural knowledge to thrive in their studies abroad and beyond.
-        </p>
-      </div>
-    `,
-    image: TOEFL,
-  },
-  ielts: {
-    name: "IELTS Preparation",
-    description:
-      "The IELTS (International English Language Testing System) is used globally to assess English proficiency for education, immigration, and employment. Our IELTS course offers rigorous preparation in reading, writing, listening, and speaking to help students reach their desired score.",
-    details:
-      "In our IELTS preparation program, students gain practical experience through mock exams, speaking sessions, and targeted exercises for each test section. Our tutors provide tips on time management, structure, and language use, equipping students with the skills to succeed on the IELTS and open doors to international opportunities.",
-    preparationSection: `
-      <div class="preparation">
-        <h2 class="text-2xl font-bold text-[#360182] mb-4">Our Approach to IELTS Preparation</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          We offer in-depth training across all test sections, focusing on linguistic precision, fluency, and strategic exam techniques. Our course prepares students to achieve high scores, meeting the IELTS requirements of top institutions and employers worldwide.
-        </p>
-        <h3 class="text-xl font-semibold text-[#360182] mb-3">Empowering Students for International Success</h3>
-        <p class="text-lg text-gray-700 mb-6">
-          IELTS preparation at our academy goes beyond test scores; we develop students' skills for effective communication and adaptation in diverse cultures, setting the stage for success in global academic and professional environments.
-        </p>
-      </div>
-    `,
-    image: IELTS,
-  },
-  gre: {
-    name: "GRE Preparation",
-    description:
-      "The GRE (Graduate Record Examination) is a globally recognized test for admission to graduate and business schools. Our GRE preparation course thoroughly covers the quantitative, verbal, and analytical writing sections, equipping students with the strategies needed to excel and achieve their target scores.",
-    details:
-      "Our GRE program offers a structured approach to mastering test content, including problem-solving techniques for quantitative questions, strategies for critical reasoning in the verbal section, and practice for analytical writing. Our expert instructors provide personalized feedback and targeted practice exercises to help students build confidence and proficiency for each part of the GRE.",
-    preparationSection: `
-      <div class="preparation">
-        <h2 class="text-2xl font-bold text-[#360182] mb-4">Our Approach to GRE Preparation</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          Our GRE course emphasizes strategic approaches to each test section, with an in-depth focus on time management, logical reasoning, and quantitative skills. We prepare students to tackle challenging problems and approach the GRE with confidence.
-        </p>
-        <h3 class="text-xl font-semibold text-[#360182] mb-3">Building Foundations for Academic and Career Success</h3>
-        <p class="text-lg text-gray-700 mb-6">
-          Beyond test scores, our GRE preparation program helps students build analytical and communication skills essential for graduate studies and professional growth. We aim to empower students with the competencies needed to excel in their academic pursuits and beyond.
-        </p>
-      </div>
-    `,
-    image: GRE,
-  },
-};
+const CoursesDetails = () => {
+  const { slug } = useParams(); // Extract slug from the URL
+  const navigate = useNavigate();
 
-const CourseDetail = () => {
-  const { slug } = useParams();
-  const course = courseData[slug];
+  const [course, setCourse] = useState(null); // State to store the blog details
+  const [loading, setLoading] = useState(true); // State to track loading
+  const [error, setError] = useState(null); // State to handle errors
+
+  // Fetch blog details from the backend
+  useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/courses/${slug}`
+        ); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error("Failed to fetch course details");
+        }
+        const data = await response.json();
+        setCourse(data); // Update the course state with fetched details
+      } catch (err) {
+        setError(err.message); // Handle errors
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchCourseDetails();
+  }, [slug]); // Refetch if slug changes
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading blog details...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">Error: {error}</p>;
+  }
 
   if (!course) {
-    return <p className="text-center mt-10">Course not found</p>;
+    return <p className="text-center mt-10">course not found</p>;
   }
 
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-5 py-10">
-        <h1 className="text-4xl font-bold text-center mb-5 text-[#5a38a7]">
-          {course.name}
-        </h1>
-        <img
-          src={course.image}
-          alt={course.name}
-          className="w-full h-64 object-cover rounded-lg mb-5"
-        />
-        <p className="text-lg text-gray-700 mb-5">{course.description}</p>
-        <p className="text-gray-600">{course.details}</p>
-        <p className="text-lg text-gray-700  my-5">
-          <div dangerouslySetInnerHTML={{ __html: course.preparationSection }} />
+      <div className="container mx-auto p-5">
+        <button
+          onClick={() => navigate("/courses")}
+          className="flex items-center text-gray-600 mb-2 hover:text-gray-800"
+        >
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+          Back to courses
+        </button>
+        <h1 className="text-3xl font-bold mb-3">{course.name}</h1>
+        <hr />
+        <p className="text-gray-500 text-sm my-2">
+          <FontAwesomeIcon icon={faClock} className="mr-2" />
+          {new Date(course.date).toLocaleDateString()}
         </p>
+        <img
+          src={course.image || "/images/default-image.jpg"} // Use default image if none provided
+          alt={course.name}
+          className="w-full h-auto rounded-lg mb-5"
+        />
+        <div
+          className="text-lg text-gray-700"
+          dangerouslySetInnerHTML={{ __html: course.largeDescription }}
+        />
       </div>
       <Footer />
     </div>
   );
 };
 
-export default CourseDetail;
+export default CoursesDetails;

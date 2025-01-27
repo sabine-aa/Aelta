@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
 
-const courseSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
-    duration: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+const courseSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  image: { type: String, required: true },
+  slug: { type: String, required: true, unique: true },
+});
 
-export default mongoose.model("Course", courseSchema);
+const Course = mongoose.model("Course", courseSchema);
+export default Course;
