@@ -6,11 +6,22 @@ import AdminFooter from "../components/AdminFooter";
 import DataTable from "../components/DataTable";
 
 const ManageCourses = () => {
-  const columns = ["Name", "Description", "Image", "Slug", "Actions"];
+  const columns = [
+    "Name",
+    "Description",
+    "Image",
+    "Slug",
+    "LargeDescription",
+    "Created At",
+    "Instructor",
+    "Actions",
+  ];
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState({
     name: "",
     description: "",
+    largeDescription: "",
+    instructor: "",
     image: "",
     slug: "",
   });
@@ -41,6 +52,8 @@ const ManageCourses = () => {
     const formData = new FormData();
     formData.append("name", newCourse.name);
     formData.append("description", newCourse.description);
+    formData.append("largeDescription", newCourse.largeDescription);
+    formData.append("instructor", newCourse.instructor);
     formData.append("slug", newCourse.slug);
     if (newCourse.image) {
       formData.append("image", newCourse.image);
@@ -71,6 +84,8 @@ const ManageCourses = () => {
     const formData = new FormData();
     formData.append("name", selectedCourse.name);
     formData.append("description", selectedCourse.description);
+    formData.append("largeDescription", selectedCourse.largeDescription);
+    formData.append("instructor", selectedCourse.instructor);
     formData.append("slug", selectedCourse.slug);
     if (selectedCourse.image && selectedCourse.image instanceof File) {
       formData.append("image", selectedCourse.image);
@@ -154,6 +169,20 @@ const ManageCourses = () => {
                 placeholder="Description"
                 className="p-2 border rounded-md md:col-span-2"
               />
+              <textarea
+                name="largeDescription"
+                value={newCourse.largeDescription}
+                onChange={handleInputChange}
+                placeholder="Large Description"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <textarea
+                name="instructor"
+                value={newCourse.instructor}
+                onChange={handleInputChange}
+                placeholder="Instructor"
+                className="p-2 border rounded-md md:col-span-2"
+              />
             </div>
             <button
               type="submit"
@@ -216,6 +245,31 @@ const ManageCourses = () => {
                   placeholder="Description"
                   className="p-2 border rounded-md md:col-span-2"
                 />
+                <textarea
+                  name="largeDescription"
+                  value={selectedCourse.largeDescription}
+                  onChange={(e) =>
+                    setSelectedCourse({
+                      ...selectedCourse,
+                      largeDescription: e.target.value,
+                    })
+                  }
+                  placeholder="Large Description"
+                  className="p-2 border rounded-md md:col-span-2"
+                />
+                <input
+                  type="text"
+                  name="instructor"
+                  value={selectedCourse.instructor}
+                  onChange={(e) =>
+                    setSelectedCourse({
+                      ...selectedCourse,
+                      instructor: e.target.value,
+                    })
+                  }
+                  placeholder="Instructor Name"
+                  className="p-2 border rounded-md"
+                />
               </div>
               <button
                 type="submit"
@@ -241,7 +295,9 @@ const ManageCourses = () => {
                   />
                 ),
                 Slug: course.slug,
-
+                LargeDescription: course.largeDescription,
+                Instructor: course.instructor,
+                "Created At": new Date(course.date).toLocaleDateString(),
                 Actions: (
                   <div className="flex space-x-2">
                     <button

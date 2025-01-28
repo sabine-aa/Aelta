@@ -32,8 +32,16 @@ export const getCourseBySlug = async (req, res) => {
 // Create a new course
 export const createCourse = async (req, res) => {
   try {
-    const { name, description, slug } = req.body;
-    const courseData = { name, description, slug };
+    const { name, description, largeDescription, date, instructor, slug } =
+      req.body;
+    const courseData = {
+      name,
+      description,
+      largeDescription,
+      date: date || new Date(),
+      instructor,
+      slug,
+    };
 
     if (req.file) {
       courseData.image = req.file.path; // Cloudinary image URL
@@ -79,6 +87,15 @@ export const deleteCourse = async (req, res) => {
     if (!course) return res.status(404).json({ message: "Course not found" });
 
     res.status(200).json({ message: "Course deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+// Get course count
+export const getCourseCount = async (req, res) => {
+  try {
+    const count = await Course.countDocuments();
+    res.status(200).json({ count });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

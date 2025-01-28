@@ -8,6 +8,7 @@ import {
   createCourse,
   updateCourse,
   deleteCourse,
+  getCourseCount,
 } from "../controllers/courseController.js";
 
 // Cloudinary storage setup
@@ -24,6 +25,7 @@ const router = express.Router();
 
 router.get("/", getAllCourses);
 router.get("/:slug", getCourseBySlug);
+router.get("/count", getCourseCount);
 router.post("/", upload.single("image"), createCourse);
 router.put("/:slug", upload.single("image"), updateCourse);
 router.delete("/:slug", deleteCourse);

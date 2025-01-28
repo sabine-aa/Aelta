@@ -69,6 +69,10 @@ const CoursesDetails = () => {
           alt={course.name}
           className="w-full h-auto rounded-lg mb-5"
         />
+        <div className="text-lg text-gray-700">
+          <span className="font-bold">Instructor Name:</span>{" "}
+          {course.instructor}
+        </div>
         <div
           className="text-lg text-gray-700"
           dangerouslySetInnerHTML={{ __html: course.largeDescription }}
