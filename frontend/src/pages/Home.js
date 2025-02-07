@@ -4,38 +4,34 @@ import Footer from "../components/Footer";
 import ImageSlider from "../components/ImageSlider";
 import SponsorSlider from "../components/SponsorSlider";
 import teacher from "../assets/teacher.png";
-import image1 from "../assets/image1.jpg";
-import image2 from "../assets/image2.jpg";
-import image3 from "../assets/image3.jpg";
 import BlogCard from "../components/BlogsCard";
+import { useState, useEffect } from "react";
 
 const Home = () => {
-  const blogs = [
-    {
-      id: 1,
-      title: "Robotics",
-      description: "A deep dive into React's component lifecycle.",
-      image: image1,
-      slug: "robotics",
-      date: "October 20, 2024",
-    },
-    {
-      id: 2,
-      title: "Programming",
-      description: "How Tailwind can streamline your styling process.",
-      image: image2,
-      slug: "programming",
-      date: "October 15, 2024",
-    },
-    {
-      id: 3,
-      title: "Art Program",
-      description: "Introduction to DevOps and best practices.",
-      image: image3,
-      slug: "art-program",
-      date: "October 10, 2024",
-    },
-  ];
+  const [blogs, setBlogs] = useState([]); // State to hold blogs data
+  const [loading, setLoading] = useState(true); // State to handle loading
+  const [error, setError] = useState(null); // State to handle errors
+
+  // Fetch blogs from the backend
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/blogs"); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error("Failed to fetch blogs");
+        }
+        const data = await response.json();
+        setBlogs(data.reverse().slice(0, 3)); // Reverse the order of blogs to show newest first
+      } catch (err) {
+        setError(err.message); // Handle errors
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
+
+    fetchBlogs();
+  }, []); // Run on component mount
+
   return (
     <div>
       <Navbar />
@@ -47,16 +43,16 @@ const Home = () => {
             <div className="flex-1 flex flex-col justify-between p-4 lg:p-10 xl:p-20">
               {" "}
               <div>
-                <h2 className="text-2xl text-[#5a38a7] font-bold mb-4">
+                <h1 className="text-2xl text-[#5a38a7] font-bold mb-4">
                   Welcome to Our Website!
-                </h2>
-                <p className="text-sm text-gray-700 mb-4">
+                </h1>
+                <p className="text-xl text-gray-700 mb-4">
                   We provide innovative solutions to help you achieve your
                   goals. Our team is dedicated to delivering quality services
                   that meet your needs and exceed your expectations. Join us on
                   this journey to success!
                 </p>
-                <p className="text-sm text-gray-700 mb-4">
+                <p className="text-xl text-gray-700 mb-4">
                   We provide innovative solutions to help you achieve your
                   goals. Our team is dedicated to delivering quality services
                   that meet your needs and exceed your expectations.
@@ -81,17 +77,27 @@ const Home = () => {
           <h1 className="text-3xl text-[#5a38a7] text-center font-bold my-10">
             Our Latest Blogs
           </h1>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {blogs.map((blog) => (
-              <BlogCard
-                key={blog.id}
-                title={blog.title}
-                description={blog.description}
-                image={blog.image}
-                slug={blog.slug}
-                date={blog.date}
-              />
-            ))}
+          <div className="container mx-auto p-5">
+            {loading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p className="text-red-500">Error: {error}</p>
+            ) : blogs.length === 0 ? (
+              <p>No blogs available at the moment.</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {blogs.map((blog) => (
+                  <BlogCard
+                    key={blog._id}
+                    title={blog.title}
+                    description={blog.description}
+                    image={blog.image || "/images/default-image.jpg"}
+                    slug={blog.slug}
+                    date={blog.date}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

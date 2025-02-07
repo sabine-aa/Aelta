@@ -39,7 +39,7 @@ const AboutUs = () => {
       <Navbar />
 
       <div
-        className="relative bg-cover bg-center h-80"
+        className="relative bg-cover bg-center h-96"
         style={{ backgroundImage: `url(${teamPhoto})` }}
       >
         <div className="bg-black bg-opacity-50 h-full flex items-center justify-center">
@@ -63,7 +63,7 @@ const AboutUs = () => {
       </div>
 
       {/* Mission and Vision Section */}
-      <div className="container mx-auto px-5 py-10 ">
+      <div className="container mx-auto px-5 pt-10 ">
         {/* Mission Section */}
         <div className="flex flex-col lg:flex-row items-center text-center md:text-left">
           <div className="flex-1 lg:ml-4">
@@ -79,11 +79,7 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="flex-1">
-            <img
-              src={missionImage}
-              alt="Our Mission"
-              className=" w-full"
-            />
+            <img src={missionImage} alt="Our Mission" className=" w-full" />
           </div>
         </div>
 
@@ -101,11 +97,7 @@ const AboutUs = () => {
             </p>
           </div>
           <div className="flex-1 lg:ml-4">
-            <img
-              src={visionImage}
-              alt="Our Vision"
-              className=" w-full"
-            />
+            <img src={visionImage} alt="Our Vision" className=" w-full" />
           </div>
         </div>
       </div>

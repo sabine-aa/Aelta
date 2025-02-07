@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CourseCard from "../components/CourseCard";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
+import coursesCover from "../assets/courses.jpg";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -32,8 +32,8 @@ const Courses = () => {
     <div>
       <Navbar />
       <div
-        className="relative bg-cover bg-center h-80"
-        // style={{ backgroundImage: `url(${coursesCover})` }}
+        className="relative bg-cover bg-center h-96"
+        style={{ backgroundImage: `url(${coursesCover})` }}
       >
         <div className="bg-black bg-opacity-50 h-full flex items-center justify-left">
           <h1 className="text-4xl sm:text-5xl font-bold text-white pl-5 sm:pl-24 md:pl-48 lg:pl-80">

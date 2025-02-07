@@ -33,7 +33,7 @@ const Blogs = () => {
     <div>
       <Navbar />
       <div
-        className="relative bg-cover bg-center h-80"
+        className="relative bg-cover bg-center h-96"
         style={{ backgroundImage: `url(${blogsCover})` }}
       >
         <div className="bg-black bg-opacity-50 h-full flex items-center justify-left">

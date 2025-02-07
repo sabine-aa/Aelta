@@ -201,7 +201,6 @@ const ContactUs = () => {
       window.location.reload();
     }, 2000);
   };
- 
 
   return (
     <div className="bg-gray-100">
@@ -210,7 +209,7 @@ const ContactUs = () => {
         <img
           src={contactus}
           alt="Blog Cover"
-          className="w-full h-80 object-cover "
+          className="w-full h-96 object-cover "
         />
       </div>
       <div className="container mx-auto items-center text-center py-12 ">
