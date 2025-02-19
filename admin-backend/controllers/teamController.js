@@ -18,7 +18,7 @@ const getAllTeams = async (req, res) => {
   }
 };
 
-// Get a team member by slug
+// Get a team member by slugg
 const getTeamBySlug = async (req, res) => {
   try {
     const team = await Team.findOne({ slug: req.params.slug });
