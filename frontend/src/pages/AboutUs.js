@@ -1,38 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import teamPhoto from "../assets/aboutUs.jpg";
 import missionImage from "../assets/missionn.jpg";
 import visionImage from "../assets/vision.jpg";
 import TeamCard from "../components/TeamCard";
-import imageAlice from "../assets/alice.jpg";
-import imageBob from "../assets/bobSmith.jpg";
-import imageCarl from "../assets/Carl.png";
 
 const AboutUs = () => {
-  const teamMembers = [
-    {
-      name: "Alice Johnson",
-      title: "Software Engineer",
-      description: "Passionate about AI and software development.",
-      image: imageAlice,
-      slug: "alice-johnson",
-    },
-    {
-      name: "Bob Smith",
-      title: "UI/UX Designer",
-      description: "Creating beautiful and functional user experiences.",
-      image: imageBob,
-      slug: "bob-smith",
-    },
-    {
-      name: "Carl",
-      title: "English Professor",
-      description: "Creating beautiful and functional user experiences.",
-      image: imageCarl,
-      slug: "carl-narc",
-    },
-  ];
+  const [teams, setTeams] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchTeams = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/teams");
+        if (!response.ok) {
+          throw new Error("Failed to fetch teams");
+        }
+        const data = await response.json();
+        setTeams(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTeams();
+  }, []);
 
   return (
     <div>
@@ -110,17 +106,32 @@ const AboutUs = () => {
           Our team is the heart of our success. With a blend of creativity,
           expertise, and passion, we work together to bring our vision to life.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member) => (
-            <TeamCard
-              key={member.slug}
-              name={member.name}
-              title={member.title}
-              description={member.description}
-              image={member.image}
-              slug={member.slug}
-            />
-          ))}
+        <div className="container mx-auto p-5">
+          <h1 className="text-3xl text-[#5a38a7] font-bold mb-5">
+            Explore Our Team Members
+          </h1>
+          {loading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className="text-red-500">Error: {error}</p>
+          ) : teams.length === 0 ? (
+            <p>No teams available at the moment.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              {teams.map((team) => (
+                <TeamCard
+                  key={team._id}
+                  name={team.name}
+                  short_description={
+                    team.short_description || "No description available"
+                  }
+                  image={team.image || "/images/default-team.jpg"}
+                  slug={team.slug}
+                  title={team.title}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

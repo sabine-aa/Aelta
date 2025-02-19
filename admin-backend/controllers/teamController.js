@@ -1,5 +1,4 @@
 import Team from "../models/Team.js";
-import mongodb from "mongodb";
 
 // Get all team members
 const getAllTeams = async (req, res) => {
@@ -10,11 +9,12 @@ const getAllTeams = async (req, res) => {
       videoUrl: team.videoUrl
         ? team.videoUrl.replace("watch?v=", "embed/")
         : null,
-      imageUrl: team.image ? `/api/teams/image/${team._id}` : null,
+      imageUrl: team.image || null, // Directly use Cloudinary image URL
     }));
     res.status(200).json(teamsWithVideoUrls);
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching teams:", err);
+    res.status(500).json({ message: "Error fetching team members." });
   }
 };
 
@@ -30,52 +30,23 @@ const getTeamBySlug = async (req, res) => {
       videoUrl: team.videoUrl
         ? team.videoUrl.replace("watch?v=", "embed/")
         : null,
-      imageUrl: team.image ? `/api/teams/image/${team._id}` : null,
+      imageUrl: team.image || null,
     });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching team member:", err);
+    res.status(500).json({ message: "Error fetching team member." });
   }
 };
 
 // Create a new team member
 const createTeam = async (req, res) => {
-  console.log("Received team data:", req.body);
-
-  const {
-    name,
-    title,
-    short_description,
-    description,
-    image,
-    slug,
-    videoUrl,
-    certificates,
-    experience,
-    education,
-    email,
-    linkedIn,
-    date,
-  } = req.body;
-
   try {
-    const teamData = {
-      name,
-      title,
-      short_description,
-      description,
-      image,
-      slug,
-      videoUrl,
-      certificates,
-      experience,
-      education,
-      email,
-      linkedIn,
-      date: date || new Date(),
-    };
-    // Check for uploaded file and include Cloudinary URL
+    console.log("Received team data:", req.body);
+    const teamData = { ...req.body, date: req.body.date || new Date() };
+
+    // If an image is uploaded, store its URL from Cloudinary
     if (req.file) {
-      teamData.image = req.file.path; // Cloudinary auto-generates URL
+      teamData.image = req.file.path;
     }
 
     const team = new Team(teamData);
@@ -83,34 +54,34 @@ const createTeam = async (req, res) => {
 
     res.status(201).json({ message: "Team member created successfully", team });
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    console.error("Error creating team member:", err);
+    res.status(400).json({ message: "Error creating team member." });
   }
 };
 
 // Update a team member
 const updateTeam = async (req, res) => {
   try {
-    console.log("Request params (slug):", req.params.slug);
-    console.log("Request body:", req.body);
-
+    console.log("Updating team member:", req.params.slug);
     const updatedData = { ...req.body };
+
     if (req.file) {
-      updatedData.image = req.file.path; // Cloudinary provides the file URL in `file.path`
+      updatedData.image = req.file.path;
     }
+
     const team = await Team.findOneAndUpdate(
       { slug: req.params.slug },
       updatedData,
       { new: true, runValidators: true }
     );
 
-    if (!team) {
+    if (!team)
       return res.status(404).json({ message: "Team member not found" });
-    }
 
-    res.status(200).json(team); // Send updated team data
+    res.status(200).json(team);
   } catch (err) {
-    console.error("Backend error:", err.message);
-    res.status(400).json({ message: err.message });
+    console.error("Error updating team member:", err);
+    res.status(400).json({ message: "Error updating team member." });
   }
 };
 
@@ -120,9 +91,11 @@ const deleteTeam = async (req, res) => {
     const team = await Team.findOneAndDelete({ slug: req.params.slug });
     if (!team)
       return res.status(404).json({ message: "Team member not found" });
+
     res.status(200).json({ message: "Team member deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error deleting team member:", err);
+    res.status(500).json({ message: "Error deleting team member." });
   }
 };
 
@@ -132,7 +105,8 @@ const getTeamCount = async (req, res) => {
     const count = await Team.countDocuments();
     res.status(200).json({ count });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error("Error fetching team count:", err);
+    res.status(500).json({ message: "Error fetching team count." });
   }
 };
 

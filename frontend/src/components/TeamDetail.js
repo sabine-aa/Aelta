@@ -1,145 +1,103 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const TeamDetail = () => {
-  const { slug } = useParams();
+const TeamDetails = () => {
+  const { slug } = useParams(); // Extract slug from the URL
   const navigate = useNavigate();
 
-  const teamData = [
-    {
-      name: "Alice Johnson",
-      title: "Software Engineer",
-      fullDescription:
-        "Alice has been in the tech industry for over 10 years, specializing in AI-driven applications and backend development.",
-      videoUrl: "https://www.youtube.com/embed/mjA6uVB1-TA?si=Ui5VgoO7YLVRGRsJ",
-      slug: "alice-johnson",
-      certificates: [
-        "Certified Kubernetes Administrator",
-        "AWS Certified Solutions Architect",
-        "Google Cloud Professional Data Engineer",
-      ],
-      experience: [
-        "5 years at Tech Corp as Lead Software Engineer",
-        "3 years at InnovateX as a Senior Backend Developer",
-        "Developed AI-driven algorithms for healthcare systems",
-      ],
-      education: [
-        "Bachelor's in Computer Science, MIT",
-        "Master's in Artificial Intelligence, Stanford University",
-      ],
-    },
-    {
-      name: "Bob Smith",
-      title: "UI/UX Designer",
-      fullDescription:
-        "Bob is an accomplished designer with a strong background in creating visually compelling and user-centric designs.",
-      videoUrl: "https://www.youtube.com/embed/mjA6uVB1-TA?si=Ui5VgoO7YLVRGRsJ",
-      slug: "bob-smith",
-      certificates: [
-        "Certified User Experience Designer (CXD)",
-        "Adobe Certified Expert in Photoshop",
-        "Interaction Design Specialization from Coursera",
-      ],
-      experience: [
-        "4 years at Creative Solutions as Lead UX Designer",
-        "2 years freelancing for Fortune 500 companies",
-        "Redesigned mobile and web interfaces for accessibility",
-      ],
-      education: [
-        "Bachelor's in Graphic Design, Rhode Island School of Design",
-        "Certificate in Interaction Design, California Institute of the Arts",
-      ],
-    },
-    {
-      name: "Carl narc",
-      title: "UI/UX Designer",
-      fullDescription:
-        "Bob is an accomplished designer with a strong background in creating visually compelling and user-centric designs.",
-      videoUrl: "https://www.youtube.com/embed/mjA6uVB1-TA?si=Ui5VgoO7YLVRGRsJ",
-      slug: "carl-narc",
-      certificates: [
-        "Certified User Experience Designer (CXD)",
-        "Adobe Certified Expert in Photoshop",
-        "Interaction Design Specialization from Coursera",
-      ],
-      experience: [
-        "4 years at Creative Solutions as Lead UX Designer",
-        "2 years freelancing for Fortune 500 companies",
-        "Redesigned mobile and web interfaces for accessibility",
-      ],
-      education: [
-        "Bachelor's in Graphic Design, Rhode Island School of Design",
-        "Certificate in Interaction Design, California Institute of the Arts",
-      ],
-    },
-  ];
+  const [team, setTeam] = useState(null); // State to store the blog details
+  const [loading, setLoading] = useState(true); // State to track loading
+  const [error, setError] = useState(null); // State to handle errors
 
-  const member = teamData.find((member) => member.slug === slug);
+  // Fetch blog details from the backend
+  useEffect(() => {
+    const fetchTeamDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/api/teams/${slug}`); // Replace with your API endpoint
+        if (!response.ok) {
+          throw new Error("Failed to fetch course details");
+        }
+        const data = await response.json();
+        setTeam(data); // Update the course state with fetched details
+      } catch (err) {
+        setError(err.message); // Handle errors
+      } finally {
+        setLoading(false); // Stop loading
+      }
+    };
 
-  if (!member) {
-    return <p className="text-center mt-10">Team member not found</p>;
+    fetchTeamDetails();
+  }, [slug]); // Refetch if slug changes
+
+  if (loading) {
+    return <p className="text-center mt-10">Loading team details...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">Error: {error}</p>;
+  }
+
+  if (!team) {
+    return <p className="text-center mt-10">team not found</p>;
   }
 
   return (
     <div>
       <Navbar />
-      <div className="container mx-auto px-5 py-10">
+      <div className="container mx-auto p-5">
         <button
-          onClick={() => navigate(-1)}
-          className="text-[#360182] hover:text-[#b3902f] mb-4"
+          onClick={() => navigate("/teams")}
+          className="flex items-center text-gray-600 mb-2 hover:text-gray-800"
         >
-          ← Back to Team
+          <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+          Back to Teams
         </button>
-        <h1 className="text-3xl font-bold mb-5">{member.name}</h1>
-        <h2 className="text-xl font-semibold text-gray-700 mb-2">
-          {member.title}
-        </h2>
-        {/* Embed YouTube Video */}
-        <iframe
-          width="100%"
-          height="500"
-          src={member.videoUrl}
-          title="YouTube video player"
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="strict-origin-when-cross-origin"
-          allowFullScreen
-          className="mb-5"
-        ></iframe>
-        <p className="text-gray-600 text-lg mb-6">{member.fullDescription}</p>
+        <h1 className="text-3xl font-bold mb-3">{team.name}</h1>
+        <hr />
+        <p className="text-gray-500 text-sm my-2">
+          <FontAwesomeIcon icon={faClock} className="mr-2" />
+          {new Date(team.date).toLocaleDateString()}
+        </p>
+        {team.videoUrl ? (
+          <div className="my-4">
+            <h2 className="text-xl font-semibold">Introduction Video</h2>
+            <div className="mt-2">
+              <iframe
+                width="560"
+                height="315"
+                src={team.videoUrl} // Directly using formatted URL
+                title="Team Video"
+                frameBorder="0"
+                allowFullScreen
+                className="rounded-lg shadow-md"
+              ></iframe>
+            </div>
+          </div>
+        ) : (
+          <p className="text-gray-500">No video available</p>
+        )}
 
-        <h3 className="text-2xl font-semibold text-[#360182] mb-3">
-          Certificates
-        </h3>
-        <ul className="list-disc list-inside text-gray-700 mb-6">
-          {member.certificates.map((cert, index) => (
-            <li key={index}>{cert}</li>
-          ))}
-        </ul>
-
-        <h3 className="text-2xl font-semibold text-[#360182] mb-3">
-          Experience
-        </h3>
-        <ul className="list-disc list-inside text-gray-700 mb-6">
-          {member.experience.map((exp, index) => (
-            <li key={index}>{exp}</li>
-          ))}
-        </ul>
-
-        <h3 className="text-2xl font-semibold text-[#360182] mb-3">
-          Education
-        </h3>
-        <ul className="list-disc list-inside text-gray-700">
-          {member.education.map((edu, index) => (
-            <li key={index}>{edu}</li>
-          ))}
-        </ul>
+        <div className="text-lg text-gray-700">{team.description}</div>
+        <div className="text-lg text-gray-700">
+          <span className="font-bold">Certificates:</span> {team.certificates}
+        </div>
+        <div className="text-lg text-gray-700">
+          <span className="font-bold">Experience:</span> {team.experience}
+        </div>
+        <div className="text-lg text-gray-700">
+          <span className="font-bold">Education:</span> {team.education}
+        </div>
+        <div className="text-lg text-gray-700">
+          <span className="font-bold">Email:</span> {team.email}
+        </div>
       </div>
       <Footer />
     </div>
   );
 };
 
-export default TeamDetail;
+export default TeamDetails;

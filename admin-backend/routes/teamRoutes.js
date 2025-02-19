@@ -6,16 +6,17 @@ import {
   createTeam,
   deleteTeam,
   updateTeam,
-} from "../controllers/teamController"; // Import controller functions
+} from "../controllers/teamController.js";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 import { v2 as cloudinary } from "cloudinary";
+import multer from "multer";
 
-// Configure Cloudinary Storage
+// Cloudinary Storage Configuration
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "teams", // Folder in Cloudinary
-    allowed_formats: ["jpg", "png", "jpeg"], // Allow only specific formats
+    folder: "teams",
+    allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
 

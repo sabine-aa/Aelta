@@ -29,7 +29,8 @@ function App() {
           <Route path="/blogs/:slug" element={<BlogsDetails />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/" element={<AboutUs />} />
-          <Route path="/team/:slug" element={<TeamDetail />} />
+          <Route path="/teams" element={<AboutUs />} />
+          <Route path="/teams/:slug" element={<TeamDetail />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/courses/:slug" element={<CourseDetail />} />
           <Route path="/admin/login" element={<Login />} />

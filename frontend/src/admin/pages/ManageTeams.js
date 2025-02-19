@@ -62,9 +62,17 @@ const ManageTeams = () => {
   const handleCreateTeam = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    for (const key in newTeam) {
-      formData.append(key, newTeam[key]);
-    }
+
+    formData.append("name", newTeam.name);
+    formData.append("title", newTeam.title);
+    formData.append("short_description", newTeam.short_description);
+    formData.append("description", newTeam.description);
+    formData.append("slug", newTeam.slug);
+    formData.append("videoUrl", newTeam.videoUrl);
+    formData.append("certificates", newTeam.certificates);
+    formData.append("experience", newTeam.experience);
+    formData.append("education", newTeam.education);
+    formData.append("email", newTeam.email);
     if (newTeam.image) {
       formData.append("image", newTeam.image);
     }
@@ -73,11 +81,13 @@ const ManageTeams = () => {
       const response = await axios.post(
         "http://localhost:5000/api/teams",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
       setTeams([...teams, response.data.team]);
     } catch (error) {
-      console.error("Error creating team:", error);
+      console.error("Error creating team:", error.response.data.message);
     }
   };
 
@@ -128,7 +138,7 @@ const ManageTeams = () => {
               className="p-2 border rounded-md"
             />
             <textarea
-              name="short description"
+              name="short_description"
               value={newTeam.short_description}
               onChange={handleInputChange}
               placeholder="Short Description"
@@ -169,7 +179,7 @@ const ManageTeams = () => {
               placeholder="Email"
               className="p-2 border rounded-md md:col-span-2"
             />
-              <input
+            <input
               type="text"
               name="videoUrl"
               value={newTeam.videoUrl}
