@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ImageSlider from "../components/ImageSlider";
 import SponsorSlider from "../components/SponsorSlider";
-import teacher from "../assets/newHome.jpg";
+import teacher from "../assets/einstine1.jpg";
 import BlogCard from "../components/BlogsCard";
 import { useState, useEffect } from "react";
 
