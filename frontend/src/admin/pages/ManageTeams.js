@@ -18,7 +18,6 @@ const ManageTeams = () => {
     "Experience",
     "Education",
     "Email",
-    "Created At",
     "Actions",
   ];
 
@@ -35,11 +34,9 @@ const ManageTeams = () => {
     experience: "",
     education: "",
     email: "",
-    date: "",
   });
   const [selectedTeam, setSelectedTeam] = useState(null);
 
-  // Fetch all teams
   useEffect(() => {
     const fetchTeams = async () => {
       try {
@@ -52,31 +49,17 @@ const ManageTeams = () => {
     fetchTeams();
   }, []);
 
-  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewTeam({ ...newTeam, [name]: value });
   };
 
-  // Create new team
   const handleCreateTeam = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-
-    formData.append("name", newTeam.name);
-    formData.append("title", newTeam.title);
-    formData.append("short_description", newTeam.short_description);
-    formData.append("description", newTeam.description);
-    formData.append("slug", newTeam.slug);
-    formData.append("videoUrl", newTeam.videoUrl);
-    formData.append("certificates", newTeam.certificates);
-    formData.append("experience", newTeam.experience);
-    formData.append("education", newTeam.education);
-    formData.append("email", newTeam.email);
-    if (newTeam.image) {
-      formData.append("image", newTeam.image);
-    }
-
+    Object.entries(newTeam).forEach(([key, value]) => {
+      if (value) formData.append(key, value);
+    });
     try {
       const response = await axios.post(
         "http://localhost:5000/api/teams",
@@ -87,11 +70,10 @@ const ManageTeams = () => {
       );
       setTeams([...teams, response.data.team]);
     } catch (error) {
-      console.error("Error creating team:", error.response.data.message);
+      console.error("Error creating team:", error);
     }
   };
 
-  // Delete team
   const handleDeleteTeam = async (slug) => {
     try {
       await axios.delete(`http://localhost:5000/api/teams/${slug}`);
@@ -113,88 +95,92 @@ const ManageTeams = () => {
             onSubmit={handleCreateTeam}
             className="space-y-4 p-4 bg-white border rounded-lg shadow-md"
           >
-            <input
-              type="text"
-              name="name"
-              value={newTeam.name}
-              onChange={handleInputChange}
-              placeholder="Name"
-              className="p-2 border rounded-md"
-            />
-            <input
-              type="text"
-              name="title"
-              value={newTeam.title}
-              onChange={handleInputChange}
-              placeholder="Title"
-              className="p-2 border rounded-md"
-            />
-            <input
-              type="text"
-              name="slug"
-              value={newTeam.slug}
-              onChange={handleInputChange}
-              placeholder="Slug"
-              className="p-2 border rounded-md"
-            />
-            <textarea
-              name="short_description"
-              value={newTeam.short_description}
-              onChange={handleInputChange}
-              placeholder="Short Description"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <textarea
-              name="description"
-              value={newTeam.description}
-              onChange={handleInputChange}
-              placeholder="Description"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <textarea
-              name="certificates"
-              value={newTeam.certificates}
-              onChange={handleInputChange}
-              placeholder="Certificates"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <textarea
-              name="experience"
-              value={newTeam.experience}
-              onChange={handleInputChange}
-              placeholder="Experience"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <textarea
-              name="education"
-              value={newTeam.education}
-              onChange={handleInputChange}
-              placeholder="Education"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <textarea
-              name="email"
-              value={newTeam.email}
-              onChange={handleInputChange}
-              placeholder="Email"
-              className="p-2 border rounded-md md:col-span-2"
-            />
-            <input
-              type="text"
-              name="videoUrl"
-              value={newTeam.videoUrl}
-              onChange={handleInputChange}
-              placeholder="Video URL"
-              className="p-2 border rounded-md"
-            />
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={(e) =>
-                setNewTeam({ ...newTeam, image: e.target.files[0] })
-              }
-            />
+            <h3 className="text-xl font-semibold">Create New Team Member</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                name="name"
+                value={newTeam.name}
+                onChange={handleInputChange}
+                placeholder="Name"
+                className="p-2 border rounded-md"
+              />
+              <input
+                type="text"
+                name="title"
+                value={newTeam.title}
+                onChange={handleInputChange}
+                placeholder="Title"
+                className="p-2 border rounded-md"
+              />
+              <input
+                type="text"
+                name="slug"
+                value={newTeam.slug}
+                onChange={handleInputChange}
+                placeholder="Slug"
+                className="p-2 border rounded-md"
+              />
+              <input
+                type="file"
+                name="image"
+                accept="image/*"
+                onChange={(e) =>
+                  setNewTeam({ ...newTeam, image: e.target.files[0] })
+                }
+              />
+              <textarea
+                name="short_description"
+                value={newTeam.short_description}
+                onChange={handleInputChange}
+                placeholder="Short Description"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <textarea
+                name="description"
+                value={newTeam.description}
+                onChange={handleInputChange}
+                placeholder="Description"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <textarea
+                name="certificates"
+                value={newTeam.certificates}
+                onChange={handleInputChange}
+                placeholder="Certificates"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <textarea
+                name="experience"
+                value={newTeam.experience}
+                onChange={handleInputChange}
+                placeholder="Experience"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <textarea
+                name="education"
+                value={newTeam.education}
+                onChange={handleInputChange}
+                placeholder="Education"
+                className="p-2 border rounded-md md:col-span-2"
+              />
+              <input
+                type="text"
+                name="email"
+                value={newTeam.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+                className="p-2 border rounded-md"
+              />
+              <input
+                type="text"
+                name="videoUrl"
+                value={newTeam.videoUrl}
+                onChange={handleInputChange}
+                placeholder="Video URL"
+                className="p-2 border rounded-md"
+              />
+            </div>
             <button
               type="submit"
               className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -209,6 +195,7 @@ const ManageTeams = () => {
               data={teams.map((team) => ({
                 Name: team.name,
                 Title: team.title,
+                "Short Description": team.short_description,
                 Description: team.description,
                 Certificates: team.certificates,
                 Experience: team.experience,
@@ -222,7 +209,6 @@ const ManageTeams = () => {
                   />
                 ),
                 Slug: team.slug,
-                ShortDescription: team.short_description,
                 Video: team.videoUrl ? (
                   <iframe
                     src={team.videoUrl}
