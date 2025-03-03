@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import teamPhoto from "../assets/aboutUs.jpg";
@@ -9,6 +9,39 @@ const AboutUs = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const missionRef = useRef(null);
+  const visionRef = useRef(null);
+  const [isMissionFlipped, setIsMissionFlipped] = useState(false);
+  const [isVisionFlipped, setIsVisionFlipped] = useState(false);
+
+  useEffect(() => {
+    const observerOptions = { threshold: 0.5 };
+
+    const observerCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.target === missionRef.current) {
+          if (entry.isIntersecting) {
+            setIsMissionFlipped((prev) => !prev); // Flip each time
+          }
+        }
+        if (entry.target === visionRef.current) {
+          if (entry.isIntersecting) {
+            setIsVisionFlipped((prev) => !prev); // Flip each time
+          }
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      observerCallback,
+      observerOptions
+    );
+
+    if (missionRef.current) observer.observe(missionRef.current);
+    if (visionRef.current) observer.observe(visionRef.current);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -57,42 +90,67 @@ const AboutUs = () => {
         </p>
       </div>
 
-      {/* Mission and Vision Section */}
-      <div className="container mx-auto px-5 pt-10 ">
-        {/* Mission Section */}
-        <div className="flex flex-col lg:flex-row items-center text-center md:text-left">
-          <div className="flex-1 lg:ml-4">
-            <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
-              Our Mission
-            </h2>
-            <p className="text-gray-700 text-lg ">
-              AELTA is committed to providing personalized tutorials and
-              professional development services that enhance academic skills. We
-              strive to bridge educational opportunities and ensure access to
-              diverse resources, enabling students to succeed in their academic
-              pursuits.
-            </p>
-          </div>
-          <div className="flex-1">
-            <img src={missionImage} alt="Our Mission" className=" w-full" />
-          </div>
-        </div>
+      <div className="container mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-center text-[#b3902f] mb-10">
+          Our Mission & Vision
+        </h2>
 
-        {/* Vision Section */}
-        <div className="flex flex-col lg:flex-row-reverse items-center text-center  md:text-left">
-          <div className="flex-1">
-            <h2 className="text-2xl font-semibold text-[#b3902f] mb-4">
-              Our Vision
-            </h2>
-            <p className="text-gray-700 text-lg mb-4 ">
-              AELTA envisions a dynamic educational landscape where every
-              learner is empowered to achieve academic excellence and
-              proficiency, fostering a culture of collaboration and lifelong
-              learning.
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 justify-center">
+          {/* Mission Card */}
+          <div ref={missionRef} className="flex justify-center">
+            <div className={`flip-card ${isMissionFlipped ? "flipped" : ""}`}>
+              <div className="flip-card-inner">
+                {/* Front Side */}
+                <div className="flip-card-front">
+                  <h3 className="text-2xl font-semibold text-[#b3902f]">
+                    Our Mission
+                  </h3>
+                  <p className="text-white mt-4 text-center">
+                    AELTA is committed to providing personalized tutorials and
+                    professional development services that enhance academic
+                    skills.
+                  </p>
+                </div>
+                {/* Back Side */}
+                <div className="flip-card-back">
+                  <h3 className="text-2xl text-[#360182] font-semibold">
+                    Empowering Education
+                  </h3>
+                  <p className="mt-4 text-center">
+                    We bridge educational opportunities and ensure access to
+                    diverse resources for academic success.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex-1 lg:ml-4">
-            <img src={visionImage} alt="Our Vision" className=" w-full" />
+
+          {/* Vision Card */}
+          <div ref={visionRef} className="flex justify-center">
+            <div className={`flip-card ${isVisionFlipped ? "flipped" : ""}`}>
+              <div className="flip-card-inner">
+                {/* Front Side */}
+                <div className="flip-card-front">
+                  <h3 className="text-2xl font-semibold text-[#b3902f]">
+                    Our Vision
+                  </h3>
+                  <p className="text-white mt-4 text-center">
+                    AELTA envisions a dynamic educational landscape where every
+                    learner is empowered to achieve academic excellence.
+                  </p>
+                </div>
+                {/* Back Side */}
+                <div className="flip-card-back">
+                  <h3 className="text-2xl text-[#360182] font-semibold">
+                    Shaping the Future
+                  </h3>
+                  <p className="mt-4 text-center">
+                    Fostering a culture of collaboration and lifelong learning
+                    through innovation and excellence.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
