@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ImageSlider from "../components/ImageSlider";
 import SponsorSlider from "../components/SponsorSlider";
-import teacher from "../assets/teacher.png";
+import teacher from "../assets/newHome.jpg";
 import BlogCard from "../components/BlogsCard";
 import { useState, useEffect } from "react";
 
@@ -70,7 +70,7 @@ const Home = () => {
               <img
                 src={teacher}
                 alt="A descriptive alt text"
-                className="w-full h-auto rounded-lg object-cover"
+                className="w-[400px] h-[400px] rounded-lg object-cover"
               />
             </div>
           </div>
