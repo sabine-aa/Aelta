@@ -4,8 +4,7 @@ import Footer from "../components/Footer";
 import teamPhoto from "../assets/aboutUs.jpg";
 import missionImage from "../assets/missionn.jpg";
 import visionImage from "../assets/vision.jpg";
-import TeamCard from "../components/TeamCard";
-
+import { Link } from "react-router-dom";
 const AboutUs = () => {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -98,41 +97,60 @@ const AboutUs = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-5 py-10 text-center">
-        <h2 className="text-3xl font-semibold mb-4 text-[#360182]">
+      <div className="mx-auto px-6 py-14 text-center">
+        {/* Section Heading */}
+        <h2 className="text-4xl font-bold mb-3 bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
           Meet Our Team
         </h2>
-        <p className="text-gray-700 max-w-2xl mx-auto mb-8 text-lg">
+        <p className="text-gray-600 max-w-2xl mx-auto mb-10 text-lg">
           Our team is the heart of our success. With a blend of creativity,
           expertise, and passion, we work together to bring our vision to life.
         </p>
-        <div className="container mx-auto p-5">
-          <h1 className="text-3xl text-[#5a38a7] font-bold mb-5">
-            Explore Our Team Members
-          </h1>
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p className="text-red-500">Error: {error}</p>
-          ) : teams.length === 0 ? (
-            <p>No teams available at the moment.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {teams.map((team) => (
-                <TeamCard
-                  key={team._id}
-                  name={team.name}
-                  short_description={
-                    team.short_description || "No description available"
-                  }
-                  image={team.image || "/images/default-team.jpg"}
-                  slug={team.slug}
-                  title={team.title}
+
+        <h1 className="text-3xl font-bold text-indigo-700 mb-6">
+          Explore Our Team Members
+        </h1>
+
+        {/* Conditional Rendering */}
+        {loading ? (
+          <p className="text-lg font-semibold text-gray-600 animate-pulse">
+            Loading...
+          </p>
+        ) : error ? (
+          <p className="text-red-500 font-semibold">Error: {error}</p>
+        ) : teams.length === 0 ? (
+          <p className="text-gray-500 font-medium">
+            No teams available at the moment.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {teams.map((team) => (
+              <div
+                key={team._id}
+                className="group  rounded-xl overflow-hidden transition-all transform hover:scale-105  p-6 text-center"
+              >
+                <img
+                  src={team.image || "/images/default-team.jpg"}
+                  alt={team.name}
+                  className="w-56 h-56 mx-auto rounded-full object-cover group-hover:opacity-90 transition-opacity"
                 />
-              ))}
-            </div>
-          )}
-        </div>
+                <h3 className="text-xl font-semibold text-gray-900 mt-4">
+                  {team.name}
+                </h3>
+                <p className="text-sm text-gray-500 mb-3">{team.title}</p>
+                <p className="text-gray-700 text-sm mb-4">
+                  {team.short_description || "No description available"}
+                </p>
+                <Link
+                  to={`/teams/${team.slug}`}
+                  className="text-[#5a38a7] font-semibold hover:text-[#8569c8]"
+                >
+                  Know More →
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Testimonials Section */}
