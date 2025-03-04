@@ -6,11 +6,13 @@ import SponsorSlider from "../components/SponsorSlider";
 import teacher from "../assets/einstine1.jpg";
 import BlogCard from "../components/BlogsCard";
 import { useState, useEffect } from "react";
+import "animate.css";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]); // State to hold blogs data
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState(null); // State to handle errors
+  
 
   // Fetch blogs from the backend
   useEffect(() => {
@@ -40,8 +42,10 @@ const Home = () => {
       <div className="flex flex-col items-center">
         <div className="container mx-auto p-4 lg:px-10 lg:pb-10 lg:pt-10 xl:px-20 xl:pb-20  xl:pt-10  ">
           <div className="flex flex-col md:flex-row lg:space-x-10 xl:space-x-20">
-            <div className="flex-1 flex flex-col justify-between p-4 lg:p-10 xl:p-20">
-              {" "}
+            <div
+              className="flex-1 flex flex-col justify-between p-4 lg:p-10 xl:p-20 animate__animated animate__fadeInUp"
+              style={{ animationDelay: "0.9s" }}
+            >
               <div>
                 <h1 className="text-2xl text-[#5a38a7] font-bold mb-4">
                   Welcome to Our Website!
@@ -60,13 +64,16 @@ const Home = () => {
               </div>
               <a
                 href="/courses"
-                className="bg-[#360182] text-white py-2 px-7  rounded transition duration-300 hover:text-[#b3902f] self-start" // Adjusted margin for spacing
+                className="bg-[#360182] text-white py-2 px-7 rounded transition duration-300 hover:text-[#b3902f] self-start"
               >
                 Explore Courses
               </a>
             </div>
 
-            <div className="flex-1 p-4 lg:p-10">
+            <div
+              className="flex-1 p-4 lg:p-10 animate__animated animate__fadeInUp"
+              style={{ animationDelay: "0.9s" }}
+            >
               <img
                 src={teacher}
                 alt="A descriptive alt text"
@@ -74,6 +81,8 @@ const Home = () => {
               />
             </div>
           </div>
+          
+
           <h1 className="text-3xl text-[#5a38a7] text-center font-bold my-10">
             Our Latest Blogs
           </h1>
