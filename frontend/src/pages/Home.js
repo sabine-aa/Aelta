@@ -12,7 +12,6 @@ const Home = () => {
   const [blogs, setBlogs] = useState([]); // State to hold blogs data
   const [loading, setLoading] = useState(true); // State to handle loading
   const [error, setError] = useState(null); // State to handle errors
-  
 
   // Fetch blogs from the backend
   useEffect(() => {
@@ -81,7 +80,6 @@ const Home = () => {
               />
             </div>
           </div>
-          
 
           <h1 className="text-3xl text-[#5a38a7] text-center font-bold my-10">
             Our Latest Blogs
