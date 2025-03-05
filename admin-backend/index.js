@@ -44,6 +44,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/teams", teamRoutes);
+app.get("/", (req, res) => {
+  res.send("Backend is running...");
+});
 
 // Start Server
 const PORT = process.env.PORT || 5000;
