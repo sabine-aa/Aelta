@@ -28,11 +28,18 @@ const app = express();
 connectDB(); // Connect to MongoDB
 
 // CORS Configuration
+
+
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
-  credentials: true,
+  origin: "https://aelta-esqv.onrender.com", // Only allow your frontend
+  methods: "GET, POST, PUT, DELETE, OPTIONS",
+  credentials: true, // Required for cookies/auth headers
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
+
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); // Allow preflight requests
+
 
 // Middlewares
 app.use(express.json());

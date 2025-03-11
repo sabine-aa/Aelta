@@ -13,22 +13,33 @@ const Blogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("https://aelta.onrender.com/api/blogs");
-        // Replace with your API endpoint
+        const response = await fetch("https://aelta.onrender.com/api/blogs", {
+          method: "GET",
+          credentials: "include", // Important for CORS if using authentication
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
         if (!response.ok) {
-          throw new Error("Failed to fetch blogs");
+          throw new Error(
+            `Failed to fetch blogs: ${response.status} ${response.statusText}`
+          );
         }
+
         const data = await response.json();
         setBlogs(data.reverse()); // Reverse the order of blogs to show newest first
       } catch (err) {
         setError(err.message); // Handle errors
+        console.error("Error fetching blogs:", err);
       } finally {
         setLoading(false); // Stop loading
       }
     };
 
     fetchBlogs();
-  }, []); // Run on component mount
+  }, []);
+  // Run on component mount
 
   return (
     <div>
