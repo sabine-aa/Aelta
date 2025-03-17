@@ -33,7 +33,9 @@ const ManageBlogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/blogs");
+        const response = await axios.get(
+          "https://aelta.onrender.com/api/blogs"
+        );
         setBlogs(response.data);
       } catch (error) {
         console.error("Error fetching blogs:", error);
@@ -64,7 +66,7 @@ const ManageBlogs = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/blogs",
+        "https://aelta.onrender.com/api/blogs",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -97,7 +99,7 @@ const ManageBlogs = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/blogs/${selectedBlog.originalSlug}`,
+        `https://aelta.onrender.com/api/blogs/${selectedBlog.originalSlug}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -115,7 +117,7 @@ const ManageBlogs = () => {
   // Delete blog
   const handleDeleteBlog = async (slug) => {
     try {
-      await axios.delete(`http://localhost:5000/api/blogs/${slug}`);
+      await axios.delete(`https://aelta.onrender.com/api/blogs/${slug}`);
       setBlogs(blogs.filter((blog) => blog.slug !== slug));
     } catch (error) {
       console.error("Error deleting blog:", error);

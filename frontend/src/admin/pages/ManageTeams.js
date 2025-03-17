@@ -40,7 +40,9 @@ const ManageTeams = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/teams");
+        const response = await axios.get(
+          "https://aelta.onrender.com/api/teams"
+        );
         setTeams(response.data);
       } catch (error) {
         console.error("Error fetching teams:", error);
@@ -62,7 +64,7 @@ const ManageTeams = () => {
     });
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/teams",
+        "https://aelta.onrender.com/api/teams",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -76,7 +78,7 @@ const ManageTeams = () => {
 
   const handleDeleteTeam = async (slug) => {
     try {
-      await axios.delete(`http://localhost:5000/api/teams/${slug}`);
+      await axios.delete(`https://aelta.onrender.com/api/teams/${slug}`);
       setTeams(teams.filter((team) => team.slug !== slug));
     } catch (error) {
       console.error("Error deleting team:", error);

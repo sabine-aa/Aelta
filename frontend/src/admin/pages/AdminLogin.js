@@ -14,7 +14,7 @@ const Login = () => {
     const token = localStorage.getItem("token");
     if (token) {
       // Validate the token (optional backend validation)
-      fetch("http://localhost:5000/api/users/protected", {
+      fetch("https://aelta.onrender.com/api/users/protected", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -39,13 +39,16 @@ const Login = () => {
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }), // Ensure plain text password is sent
-      });
+      const response = await fetch(
+        "https://aelta.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }), // Ensure plain text password is sent
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

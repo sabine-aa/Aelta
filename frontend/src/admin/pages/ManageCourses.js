@@ -31,7 +31,9 @@ const ManageCourses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/courses");
+        const response = await axios.get(
+          "https://aelta.onrender.com/api/courses"
+        );
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -61,7 +63,7 @@ const ManageCourses = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/courses",
+        "https://aelta.onrender.com/api/courses",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -93,7 +95,7 @@ const ManageCourses = () => {
 
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/courses/${selectedCourse.originalSlug}`,
+        `https://aelta.onrender.com/api/courses/${selectedCourse.originalSlug}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
@@ -111,7 +113,7 @@ const ManageCourses = () => {
   // Delete Course
   const handleDeleteCourse = async (slug) => {
     try {
-      await axios.delete(`http://localhost:5000/api/courses/${slug}`);
+      await axios.delete(`https://aelta.onrender.com/api/courses/${slug}`);
       setCourses(courses.filter((course) => course.slug !== slug));
     } catch (error) {
       console.error("Error deleting course:", error);

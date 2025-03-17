@@ -36,8 +36,8 @@ const Dashboard = () => {
 
       // Fetch blogs and users count
       const responses = await Promise.all([
-        axios.get("http://localhost:5000/api/blogs/count", { headers }),
-        axios.get("http://localhost:5000/api/users/count", { headers }),
+        axios.get("https://aelta.onrender.com/api/blogs/count", { headers }),
+        axios.get("https://aelta.onrender.com/api/users/count", { headers }),
       ]);
 
       console.log("API Response:", responses);

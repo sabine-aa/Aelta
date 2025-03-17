@@ -29,11 +29,14 @@ const ManageUsers = () => {
     const fetchUsers = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:5000/api/users/", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://aelta.onrender.com/api/users/",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -54,7 +57,7 @@ const ManageUsers = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:5000/api/users/create",
+        "https://aelta.onrender.com/api/create",
         newUser,
         {
           headers: {
@@ -64,9 +67,12 @@ const ManageUsers = () => {
       );
 
       // Refetch users after creating a new one
-      const updatedUsers = await axios.get("http://localhost:5000/api/users/", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const updatedUsers = await axios.get(
+        "https://aelta.onrender.com/api/users/",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setUsers(updatedUsers.data);
 
       setNewUser({ firstName: "", lastName: "", email: "", password: "" });
@@ -128,7 +134,7 @@ const ManageUsers = () => {
     if (!confirmDelete) return;
     try {
       // Make the DELETE request to the backend
-      await axios.delete(`http://localhost:5000/api/users/${userId}`);
+      await axios.delete(`https://aelta.onrender.com/api/users/${userId}`);
       // Update the state to remove the deleted user
       setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId));
       console.log("User deleted successfully");
