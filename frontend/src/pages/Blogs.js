@@ -13,7 +13,7 @@ const Blogs = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/blogs`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/blogs`, {
           method: "GET",
           credentials: "include", // Important for CORS if using authentication
           headers: {
