@@ -46,7 +46,7 @@ const AboutUs = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/teams");
+        const response = await fetch("https://aelta.onrender.com/api/teams");
         if (!response.ok) {
           throw new Error("Failed to fetch teams");
         }

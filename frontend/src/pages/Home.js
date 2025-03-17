@@ -17,7 +17,7 @@ const Home = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/blogs"); // Replace with your API endpoint
+        const response = await fetch("https://aelta.onrender.com/api/blogs"); // Replace with your API endpoint
         if (!response.ok) {
           throw new Error("Failed to fetch blogs");
         }
