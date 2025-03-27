@@ -57,7 +57,7 @@ const ManageUsers = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "https://aelta.onrender.com/api/create",
+        "https://aelta.onrender.com/api/users/create",
         newUser,
         {
           headers: {
