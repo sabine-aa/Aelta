@@ -102,7 +102,7 @@ const ManageUsers = () => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/users/${selectedUser._id}`,
+        `https://aelta.onrender.com/api/users/${selectedUser._id}`,
         updatedUserData,
         {
           headers: {
